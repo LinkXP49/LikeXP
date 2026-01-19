@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>LinkXP Profile</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+  <body>
+    <h1>Create Your Gamer Profile</h1>
+
+    <form>
+  <label>Gamer Name:</label><br />
+  <input type="text" id="gamerName" /><br /><br />
+
+  <label>Main Game:</label><br />
+  <input type="text" id="mainGame" /><br /><br />
+
+  <label>Skill Level:</label><br />
+  <select id="skillLevel">
+    <option>Beginner</option>
+    <option>Intermediate</option>
+    <option>Advanced</option>
+  </select><br /><br />
+
+  <!-- NEW AVATAR FIELD -->
+  <label>Profile Picture (optional):</label><br>
+  <input type="file" id="avatar" accept="image/*"><br><br>
+
+  <button type="button" onclick="saveProfile()">Save Profile</button>
+</form>
+
+  <script>
+function generateBio(mainGame, skillLevel) {
+  if (skillLevel === "Beginner") {
+    return `New player of ${mainGame}, eager to learn and have fun!`;
+  } else if (skillLevel === "Intermediate") {
+    return `Intermediate ${mainGame} player focused on teamwork and improvement.`;
+  } else if (skillLevel === "Advanced") {
+    return `Advanced ${mainGame} player mastering strategies and leading squads.`;
+  }
+}
+
+function generateTags(mainGame, skillLevel) {
+  const tags = [];
+  if (skillLevel === "Beginner") {
+    tags.push("Learner", "Casual", "Fun-Loving");
+  } else if (skillLevel === "Intermediate") {
+    tags.push("Team Player", "Strategic", "Competitive");
+  } else {
+    tags.push("Pro Gamer", "Leader", "Squad Master");
+  }
+  tags.push(mainGame);
+  return tags;
+}
+
+function saveProfile() {
+  const gamerName = document.getElementById("gamerName").value;
+  const mainGame = document.getElementById("mainGame").value;
+  const skillLevel = document.getElementById("skillLevel").value;
+
+  // Handle avatar
+  const avatarInput = document.getElementById("avatar");
+  let avatarData = "";
+  if (avatarInput.files.length > 0) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      localStorage.setItem("avatar", e.target.result);
+      finishSave();
+    };
+    reader.readAsDataURL(avatarInput.files[0]);
+  } else {
+    localStorage.setItem("avatar", "");
+    finishSave();
+  }
+
+  function finishSave() {
+    const aiBio = generateBio(mainGame, skillLevel);
+    const aiTags = generateTags(mainGame, skillLevel);
+
+    localStorage.setItem("gamerName", gamerName);
+    localStorage.setItem("mainGame", mainGame);
+    localStorage.setItem("skillLevel", skillLevel);
+    localStorage.setItem("aiBio", aiBio);
+    localStorage.setItem("aiTags", JSON.stringify(aiTags));
+
+    window.location.href = "profile.html";
+  }
+}
+
+// Regenerate Bio function
+function regenerateBio() {
+  const mainGame = localStorage.getItem("mainGame");
+  const skillLevel = localStorage.getItem("skillLevel");
+  const newBio = generateBio(mainGame, skillLevel);
+  localStorage.setItem("aiBio", newBio);
+  location.reload();
+}
+</script>
+  </body>
+</html>
