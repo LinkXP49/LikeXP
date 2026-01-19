@@ -41,15 +41,16 @@
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s;
+      cursor: pointer;
     }
     .nav-links a:hover { color: #00f0ff; }
-    .auth-btns button {
+    .auth-btns a {
       padding: 8px 20px;
       margin-left: 12px;
-      border: none;
       border-radius: 6px;
       font-weight: bold;
       cursor: pointer;
+      text-decoration: none;
       transition: all 0.3s;
     }
     .login { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
@@ -84,7 +85,7 @@
       margin: 0 auto 40px;
       color: #d0d0ff;
     }
-    .hero-ctas button {
+    .hero-ctas a, .hero-ctas button {
       padding: 14px 36px;
       font-size: 1.1rem;
       font-weight: bold;
@@ -94,7 +95,7 @@
       cursor: pointer;
       transition: all 0.3s;
     }
-    .join { background: #00ff9d; color: #0a0a1f; box-shadow: 0 0 25px #00ff9d80; }
+    .join { background: #00ff9d; color: #0a0a1f; box-shadow: 0 0 25px #00ff9d80; text-decoration:none; display:inline-block;}
     .learn { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
     .join:hover { transform: translateY(-4px); box-shadow: 0 0 40px #00ff9d; }
     .learn:hover { background: rgba(0,240,255,0.15); }
@@ -122,6 +123,8 @@
       box-shadow: 0 0 30px #00f0ff60;
     }
     .feature-card h3 { color: #00ff9d; margin: 20px 0 12px; }
+    .feature-card button { margin-top:12px; padding:10px 24px; border-radius:50px; cursor:pointer; border:none; font-weight:bold; background:#00f0ff; color:#0a0a1f; }
+    .feature-card button:hover { transform: scale(1.05); box-shadow:0 0 20px #00f0ff80; }
 
     /* Discover Section */
     .discover {
@@ -214,6 +217,7 @@
     .news-item:hover { transform: scale(1.04); }
     .news-item img { width: 100%; height: 180px; object-fit: cover; }
     .news-item div { padding: 20px; }
+    .news-item a { text-decoration:none; color:#00f0ff; font-weight:bold; }
 
     footer {
       padding: 60px 5% 30px;
@@ -234,48 +238,51 @@
   <nav>
     <div class="logo">LinkXP Gaming</div>
     <div class="nav-links">
-      <a href="#">Home</a>
-      <a href="#">Features</a>
-      <a href="#">About</a>
-      <a href="#">Community</a>
+      <a href="#hero">Home</a>
+      <a href="#features">Features</a>
+      <a href="#about" onclick="alert('About page coming soon!')">About</a>
+      <a href="#community" onclick="alert('Community page coming soon!')">Community</a>
     </div>
     <div class="auth-btns">
-      <button class="login">Login</button>
-      <button class="signup">Join Now</button>
+      <a href="./setup.html" class="login">Login</a>
+      <a href="./setup.html" class="signup">Join Now</a>
     </div>
   </nav>
 
-  <header>
+  <header id="hero">
     <h1>Connect, Game & Level Up!</h1>
     <p>The Ultimate Social Media Platform for Gamers.</p>
     <div class="hero-ctas">
-      <button class="join">Join Now</button>
-      <button class="learn">Learn More</button>
+      <a href="./setup.html" class="join">Join Now</a>
+      <a href="#features" class="learn">Learn More</a>
     </div>
   </header>
 
-  <section class="features">
+  <section class="features" id="features">
     <div class="feature-card">
       <h3>🎮 Find Your Squad</h3>
       <p>Connect with gamers who share your interests and playstyle.</p>
+      <button onclick="alert('Feature coming soon!')">Explore</button>
     </div>
     <div class="feature-card">
       <h3>🏆 Share Your Achievements</h3>
       <p>Showcase victories, share clips, and highlight milestones.</p>
+      <button onclick="alert('Feature coming soon!')">Explore</button>
     </div>
     <div class="feature-card">
       <h3>🔍 Discover New Games</h3>
       <p>Get recommendations and stay updated with the latest trends.</p>
+      <button onclick="alert('Feature coming soon!')">Explore</button>
     </div>
   </section>
 
-  <section class="discover">
+  <section class="discover" id="about">
     <h2>Discover & Connect</h2>
     <p>Meet gamers, join communities, find trending games.</p>
-    
+      
     <div class="search-bar">
       <input type="text" placeholder="Search by game, username, or keyword...">
-      <button>Search</button>
+      <button onclick="alert('Search coming soon!')">Search</button>
     </div>
 
     <div class="profiles">
@@ -283,25 +290,24 @@
         <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="ProLegend">
         <h4>ProLegend</h4>
         <p>Esports Pro • 12.4K followers</p>
-        <button class="follow-btn">Follow</button>
+        <button class="follow-btn" onclick="alert('Follow feature coming soon!')">Follow</button>
       </div>
       <div class="profile-card">
         <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="GamerGirl">
         <h4>GamerGirl</h4>
         <p>Content Creator • 8.9K followers</p>
-        <button class="follow-btn">Follow</button>
+        <button class="follow-btn" onclick="alert('Follow feature coming soon!')">Follow</button>
       </div>
       <div class="profile-card">
         <img src="https://images.unsplash.com/photo-1556155099-490a1ba16284?w=400" alt="xDarkKnight">
         <h4>xDarkKnight</h4>
         <p>Battle Royale Streamer • 10.2K followers</p>
-        <button class="follow-btn">Follow</button>
+        <button class="follow-btn" onclick="alert('Follow feature coming soon!')">Follow</button>
       </div>
-      <!-- Add 1-2 more cards as needed -->
     </div>
   </section>
 
-  <section class="news">
+  <section class="news" id="community">
     <h2>Latest Gaming News</h2>
     <div class="news-grid">
       <div class="news-item">
@@ -309,6 +315,7 @@
         <div>
           <h3>Epic New Shooter Announced!</h3>
           <p>Get the lowdown on the latest insane game • Apr 20, 2025</p>
+          <a href="#" onclick="alert('Full article coming soon!')">Read More</a>
         </div>
       </div>
       <div class="news-item">
@@ -316,9 +323,9 @@
         <div>
           <h3>Top RPGs to Play This Year</h3>
           <p>Explore the best new RPGs you can't miss • Apr 10, 2025</p>
+          <a href="#" onclick="alert('Full article coming soon!')">Read More</a>
         </div>
       </div>
-      <!-- Add more news cards -->
     </div>
   </section>
 
