@@ -1,171 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LinkXP – Create Your Profile</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
-      color: #e0e0ff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-    }
-
-    /* Navigation */
-    nav {
-      width: 100%;
-      padding: 15px 5%;
-      background: rgba(15, 12, 41, 0.85);
-      backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo { 
-      font-family: 'Orbitron', sans-serif; 
-      font-size: 1.8rem; 
-      color: #00f0ff; 
-      text-shadow: 0 0 15px #00f0ff; 
-    }
-    .nav-links a { 
-      color: #d0d0ff; 
-      margin: 0 12px; 
-      text-decoration: none; 
-      font-weight: 500; 
-      transition: color 0.3s; 
-    }
-    .nav-links a:hover { color: #00f0ff; }
-
-    /* Container */
-    .container {
-      background: rgba(20,15,50,0.85);
-      padding: 50px 30px;
-      border-radius: 20px;
-      margin: 80px 0;
-      width: 100%;
-      max-width: 450px;
-      box-shadow: 0 0 40px #00f0ff80;
-      text-align: center;
-    }
-    .container h1 {
-      font-family: 'Orbitron', sans-serif;
-      color: #00f0ff;
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px #00f0ff;
-    }
-    .container p {
-      margin-bottom: 25px;
-      color: #b0b0ff;
-      font-size: 1rem;
-    }
-
-    /* Input Fields */
-    input, select, textarea {
-      width: 100%;
-      padding: 14px 18px;
-      margin-bottom: 20px;
-      border-radius: 50px;
-      border: none;
-      background: rgba(255,255,255,0.08);
-      color: #fff;
-      font-size: 1rem;
-    }
-    input::placeholder, textarea::placeholder {
-      color: #c0c0ff;
-    }
-
-    /* Buttons */
-    .btn {
-      width: 100%;
-      padding: 14px 0;
-      border-radius: 50px;
-      border: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .btn-primary {
-      background: #00ff9d;
-      color: #0a0a1f;
-      box-shadow: 0 0 25px #00ff9d80;
-    }
-    .btn-primary:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 0 40px #00ff9d80;
-    }
-    .btn-secondary {
-      background: transparent;
-      border: 2px solid #00f0ff;
-      color: #00f0ff;
-    }
-    .btn-secondary:hover {
-      background: rgba(0,240,255,0.15);
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 50px;
-      padding: 30px 5%;
-      text-align: center;
-      color: #9090cc;
-      border-top: 1px solid #00f0ff20;
-    }
-    footer a { color: #00f0ff; margin: 0 8px; text-decoration: none; }
-
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkXP – Create Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family:'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+  color:#e0e0ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+.container {
+  background: rgba(20,15,50,0.85);
+  padding:40px;
+  border-radius:16px;
+  border:1px solid #00f0ff40;
+  width:350px;
+  text-align:center;
+}
+.container h2 { font-family:'Orbitron', sans-serif; color:#00f0ff; margin-bottom:24px; }
+.container input, .container textarea, .container select {
+  width:100%;
+  padding:12px 16px;
+  margin-bottom:16px;
+  border-radius:8px;
+  border:none;
+}
+.container button {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:50px;
+  background:#00ff9d;
+  color:#0a0a1f;
+  font-weight:bold;
+  cursor:pointer;
+}
+.container button:hover { box-shadow:0 0 20px #00ff9d; transform:scale(1.02);}
+.container a { color:#00f0ff; text-decoration:none; }
+</style>
 </head>
 <body>
 
-  <nav>
-    <div class="logo">LinkXP Gaming</div>
-    <div class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="#about">About</a>
-      <a href="#features">Features</a>
-      <a href="#community">Community</a>
-    </div>
-  </nav>
+<div class="container">
+  <h2>Create Your LinkXP Profile</h2>
+  <input type="text" id="username" placeholder="Username">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  <select id="genre">
+    <option value="" disabled selected>Select Favorite Genre</option>
+    <option value="FPS">FPS</option>
+    <option value="RPG">RPG</option>
+    <option value="MOBA">MOBA</option>
+    <option value="Battle Royale">Battle Royale</option>
+    <option value="Simulation">Simulation</option>
+  </select>
+  <textarea id="bio" placeholder="Write a short bio..." rows="3"></textarea>
+  <button onclick="createProfile()">Create Profile</button>
+  <p style="margin-top:16px; font-size:0.9rem;">Already have an account? <a href="login.html">Login here</a></p>
+</div>
 
-  <div class="container">
-    <h1>Create Your Profile</h1>
-    <p>Join the ultimate gamer community. Share your achievements, find squads, and level up!</p>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
-    <input type="text" placeholder="Username" />
-    <input type="email" placeholder="Email" />
-    <input type="password" placeholder="Password" />
-    <select>
-      <option selected disabled>Favorite Game Genre</option>
-      <option>FPS</option>
-      <option>MOBA</option>
-      <option>RPG</option>
-      <option>Battle Royale</option>
-      <option>Strategy</option>
-      <option>Other</option>
-    </select>
-    <textarea placeholder="Short Bio (max 100 characters)"></textarea>
+<script>
+  // 🔑 Replace these with your Firebase project config
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
 
-    <button class="btn btn-primary" onclick="alert('Profile creation coming soon!')">Create Profile</button>
-    <button class="btn btn-secondary" onclick="window.location.href='index.html'">Back to Home</button>
-  </div>
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-  <footer>
-    <p>Privacy Policy • Terms of Service • Contact Us</p>
-    <p>© 2026 LinkXP Gaming. All Rights Reserved.</p>
-  </footer>
+  function createProfile() {
+    const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const genre = document.getElementById('genre').value;
+    const bio = document.getElementById('bio').value;
+
+    if(!username || !email || !password) {
+      alert('Please fill in all required fields!');
+      return;
+    }
+
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        const user = userCredential.user;
+        db.collection('profiles').doc(user.uid).set({
+          username: username,
+          email: email,
+          favoriteGenre: genre,
+          bio: bio,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+          alert('Profile created successfully!');
+          window.location.href = 'index.html';
+        });
+      })
+      .catch(error => { alert(error.message); });
+  }
+</script>
 
 </body>
 </html>
