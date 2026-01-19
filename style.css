@@ -49,7 +49,7 @@ ul li {
   max-width: 700px;
 }
 
-.tags span {
+.tags a.tag {
   display: inline-block;
   margin: 6px;
   padding: 8px 14px;
@@ -58,4 +58,11 @@ ul li {
   border-radius: 999px;
   font-size: 0.85rem;
   color: #38bdf8;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.tags a.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
