@@ -1,188 +1,330 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LinkXP – Your Gamer Identity</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkXP Gaming – Connect, Game & Level Up!</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
-    /* ---------- Global Styles ---------- */
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Roboto:wght@400;700&display=swap');
-
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(120deg, #0f0c29, #302b63, #24243e);
-      color: #f5f5f5;
-      text-align: center;
-      padding: 0 20px;
+      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    a {
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(15, 12, 41, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 15px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+    }
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: #00f0ff;
+      text-shadow: 0 0 15px #00f0ff;
+    }
+    .nav-links a {
+      color: #d0d0ff;
+      margin: 0 18px;
       text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
     }
+    .nav-links a:hover { color: #00f0ff; }
+    .auth-btns button {
+      padding: 8px 20px;
+      margin-left: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .login { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
+    .signup { background: #00ff9d; color: #0a0a1f; }
+    .login:hover { background: rgba(0,240,255,0.15); }
+    .signup:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
 
-    /* ---------- Header / Hero ---------- */
+    /* Hero */
     header {
-      padding: 80px 20px 40px;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    header h1 {
-      font-family: 'Press Start 2P', cursive;
-      font-size: 3rem;
-      color: #00ffe7;
-      margin-bottom: 10px;
-      text-shadow: 0 0 10px #00ffe7, 0 0 20px #00ffe7;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      color: #ffffffaa;
-      margin-bottom: 30px;
-    }
-
-    .cta {
-      display: inline-block;
-      padding: 14px 28px;
-      margin: 10px;
-      background: linear-gradient(45deg, #ff00c8, #00ffe7);
-      color: #020c0c;
-      font-weight: bold;
-      border-radius: 12px;
-      font-size: 1rem;
-      transition: transform 0.2s, box-shadow 0.3s;
-      box-shadow: 0 0 15px #ff00c8, 0 0 30px #00ffe7;
-    }
-
-    .cta:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 25px #ff00c8, 0 0 50px #00ffe7;
-    }
-
-    /* ---------- Tags / Badges ---------- */
-    .tags {
-      margin: 30px auto;
-      max-width: 700px;
-    }
-
-    .tags a.tag {
-      display: inline-block;
-      margin: 6px;
-      padding: 10px 16px;
-      background: linear-gradient(45deg, #ff00c8, #00ffe7);
-      border-radius: 999px;
-      font-size: 0.85rem;
-      color: #0c0c0c;
-      font-weight: bold;
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.3s;
-      box-shadow: 0 0 10px #ff00c8, 0 0 20px #00ffe7;
-    }
-
-    .tags a.tag:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px #ff00c8, 0 0 40px #00ffe7;
-    }
-
-    /* ---------- Featured Example Profile ---------- */
-    .example-profile {
-      margin: 50px auto;
-      max-width: 700px;
-      animation: fadeIn 1.5s ease forwards;
-    }
-
-    .profile-card {
-      background: #1e1e2f;
-      padding: 20px;
-      border-radius: 16px;
+      padding: 160px 5% 100px;
       text-align: center;
+      background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+      position: relative;
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(15,12,41,0.85));
+    }
+    header > * { position: relative; z-index: 2; }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.8rem;
       color: #ffffff;
-      box-shadow: 0 0 15px #00ffe7;
-      transition: transform 0.3s, box-shadow 0.3s;
+      text-shadow: 0 0 30px #00f0ff, 0 0 60px #ff00aa;
+      margin-bottom: 16px;
     }
-
-    .profile-card:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px #00ffe7, 0 0 60px #ff00c8;
+    header p {
+      font-size: 1.4rem;
+      max-width: 680px;
+      margin: 0 auto 40px;
+      color: #d0d0ff;
     }
-
-    .profile-card img {
-      width: 120px;
-      border-radius: 50%;
-      margin-bottom: 10px;
-      border: 3px solid #00ffe7;
-    }
-
-    .profile-card p {
-      margin: 0;
-      font-size: 1rem;
+    .hero-ctas button {
+      padding: 14px 36px;
+      font-size: 1.1rem;
       font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      margin: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
     }
+    .join { background: #00ff9d; color: #0a0a1f; box-shadow: 0 0 25px #00ff9d80; }
+    .learn { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
+    .join:hover { transform: translateY(-4px); box-shadow: 0 0 40px #00ff9d; }
+    .learn:hover { background: rgba(0,240,255,0.15); }
 
-    /* ---------- Footer ---------- */
-    footer {
-      margin-top: 60px;
-      font-size: 0.85rem;
-      color: #94a3b8;
+    /* Features */
+    .features {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      flex-wrap: wrap;
+      padding: 60px 5%;
+      background: rgba(20,15,50,0.4);
+    }
+    .feature-card {
+      background: rgba(30,25,70,0.6);
+      padding: 30px;
+      border-radius: 16px;
+      width: 320px;
+      text-align: center;
+      border: 1px solid #00f0ff40;
+      transition: all 0.4s;
+    }
+    .feature-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 0 30px #00f0ff60;
+    }
+    .feature-card h3 { color: #00ff9d; margin: 20px 0 12px; }
+
+    /* Discover Section */
+    .discover {
+      padding: 80px 5%;
       text-align: center;
     }
-
-    /* ---------- Animations ---------- */
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .discover h2 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; color: #00f0ff; margin-bottom: 40px; text-shadow: 0 0 20px #00f0ff80; }
+    .search-bar {
+      max-width: 700px;
+      margin: 0 auto 50px;
+      display: flex;
+    }
+    .search-bar input {
+      flex: 1;
+      padding: 16px 24px;
+      font-size: 1.1rem;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      background: rgba(255,255,255,0.08);
+      color: white;
+    }
+    .search-bar button {
+      padding: 0 40px;
+      background: #00f0ff;
+      color: #0a0a1f;
+      border: none;
+      border-radius: 0 50px 50px 0;
+      font-weight: bold;
+      cursor: pointer;
     }
 
-    /* ---------- Responsive ---------- */
-    @media (max-width: 500px) {
-      header h1 {
-        font-size: 2rem;
-      }
-      header p {
-        font-size: 1rem;
-      }
-      .cta {
-        padding: 12px 20px;
-        font-size: 0.9rem;
-      }
-      .tags a.tag {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-      }
+    /* Profile Grid */
+    .profiles {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .profile-card {
+      background: rgba(30,25,70,0.7);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #ff00aa40;
+      transition: all 0.3s;
+      text-align: center;
+      padding: 20px;
+    }
+    .profile-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 35px #ff00aa80;
+    }
+    .profile-card img {
+      width: 110px; height: 110px;
+      border-radius: 50%;
+      border: 3px solid #00f0ff;
+      margin-bottom: 16px;
+    }
+    .profile-card h4 { color: #ffffff; margin-bottom: 8px; }
+    .profile-card p { color: #b0b0ff; font-size: 0.95rem; margin-bottom: 16px; }
+    .follow-btn {
+      background: #00ff9d;
+      color: #0a0a1f;
+      border: none;
+      padding: 10px 28px;
+      border-radius: 50px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* News */
+    .news {
+      padding: 80px 5%;
+      background: rgba(10,8,30,0.6);
+    }
+    .news h2 { font-family: 'Orbitron', sans-serif; font-size: 2.6rem; color: #ff00aa; text-align: center; margin-bottom: 50px; }
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .news-item {
+      background: rgba(40,35,80,0.5);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+    .news-item:hover { transform: scale(1.04); }
+    .news-item img { width: 100%; height: 180px; object-fit: cover; }
+    .news-item div { padding: 20px; }
+
+    footer {
+      padding: 60px 5% 30px;
+      text-align: center;
+      color: #9090cc;
+      border-top: 1px solid #00f0ff20;
+    }
+    footer a { color: #00f0ff; margin: 0 12px; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.8rem; }
+      .nav-links { display: none; } /* mobile menu later if needed */
     }
   </style>
 </head>
 <body>
 
-  <!-- Hero / Header -->
+  <nav>
+    <div class="logo">LinkXP Gaming</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">About</a>
+      <a href="#">Community</a>
+    </div>
+    <div class="auth-btns">
+      <button class="login">Login</button>
+      <button class="signup">Join Now</button>
+    </div>
+  </nav>
+
   <header>
-    <h1>LinkXP</h1>
-    <p>Your gamer identity — everywhere.</p>
-    <a class="cta" href="./setup.html">Create Your Profile</a>
+    <h1>Connect, Game & Level Up!</h1>
+    <p>The Ultimate Social Media Platform for Gamers.</p>
+    <div class="hero-ctas">
+      <button class="join">Join Now</button>
+      <button class="learn">Learn More</button>
+    </div>
   </header>
 
-  <!-- Gamer Tags / Badges -->
-  <section class="tags">
-    <a href="#" class="tag">🔥 Team Player</a>
-    <a href="#" class="tag">🎯 Competitive</a>
-    <a href="#" class="tag">🧠 Strategic</a>
-    <a href="#" class="tag">⚡ Casual</a>
-    <a href="#" class="tag">🎮 Valorant</a>
-    <a href="#" class="tag">🛡️ Apex Legends</a>
-  </section>
-
-  <!-- Featured Example Profile -->
-  <section class="example-profile">
-    <h2>Featured Gamer Profile</h2>
-    <div class="profile-card">
-      <img src="assets/profile-example.png" alt="Example Gamer" />
-      <p><strong>AxpX</strong> – Level 72 | FPS Master | Friendly</p>
+  <section class="features">
+    <div class="feature-card">
+      <h3>🎮 Find Your Squad</h3>
+      <p>Connect with gamers who share your interests and playstyle.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🏆 Share Your Achievements</h3>
+      <p>Showcase victories, share clips, and highlight milestones.</p>
+    </div>
+    <div class="feature-card">
+      <h3>🔍 Discover New Games</h3>
+      <p>Get recommendations and stay updated with the latest trends.</p>
     </div>
   </section>
 
-  <!-- Footer -->
+  <section class="discover">
+    <h2>Discover & Connect</h2>
+    <p>Meet gamers, join communities, find trending games.</p>
+    
+    <div class="search-bar">
+      <input type="text" placeholder="Search by game, username, or keyword...">
+      <button>Search</button>
+    </div>
+
+    <div class="profiles">
+      <div class="profile-card">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="ProLegend">
+        <h4>ProLegend</h4>
+        <p>Esports Pro • 12.4K followers</p>
+        <button class="follow-btn">Follow</button>
+      </div>
+      <div class="profile-card">
+        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400" alt="GamerGirl">
+        <h4>GamerGirl</h4>
+        <p>Content Creator • 8.9K followers</p>
+        <button class="follow-btn">Follow</button>
+      </div>
+      <div class="profile-card">
+        <img src="https://images.unsplash.com/photo-1556155099-490a1ba16284?w=400" alt="xDarkKnight">
+        <h4>xDarkKnight</h4>
+        <p>Battle Royale Streamer • 10.2K followers</p>
+        <button class="follow-btn">Follow</button>
+      </div>
+      <!-- Add 1-2 more cards as needed -->
+    </div>
+  </section>
+
+  <section class="news">
+    <h2>Latest Gaming News</h2>
+    <div class="news-grid">
+      <div class="news-item">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=800" alt="New Shooter">
+        <div>
+          <h3>Epic New Shooter Announced!</h3>
+          <p>Get the lowdown on the latest insane game • Apr 20, 2025</p>
+        </div>
+      </div>
+      <div class="news-item">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&q=80&w=800" alt="RPGs">
+        <div>
+          <h3>Top RPGs to Play This Year</h3>
+          <p>Explore the best new RPGs you can't miss • Apr 10, 2025</p>
+        </div>
+      </div>
+      <!-- Add more news cards -->
+    </div>
+  </section>
+
   <footer>
-    © 2026 LinkXP • Built for gamers
+    <p>Privacy Policy • Terms of Service • Contact Us</p>
+    <p>© 2026 LinkXP Gaming. All Rights Reserved.</p>
   </footer>
 
 </body>
