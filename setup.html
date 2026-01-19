@@ -1,99 +1,171 @@
 <!DOCTYPE html>
-<html>
-  <head>
-  <title>LinkXP Profile</title>
-  <link rel="stylesheet" href="../style.css">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkXP – Create Your Profile</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+
+    /* Navigation */
+    nav {
+      width: 100%;
+      padding: 15px 5%;
+      background: rgba(15, 12, 41, 0.85);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo { 
+      font-family: 'Orbitron', sans-serif; 
+      font-size: 1.8rem; 
+      color: #00f0ff; 
+      text-shadow: 0 0 15px #00f0ff; 
+    }
+    .nav-links a { 
+      color: #d0d0ff; 
+      margin: 0 12px; 
+      text-decoration: none; 
+      font-weight: 500; 
+      transition: color 0.3s; 
+    }
+    .nav-links a:hover { color: #00f0ff; }
+
+    /* Container */
+    .container {
+      background: rgba(20,15,50,0.85);
+      padding: 50px 30px;
+      border-radius: 20px;
+      margin: 80px 0;
+      width: 100%;
+      max-width: 450px;
+      box-shadow: 0 0 40px #00f0ff80;
+      text-align: center;
+    }
+    .container h1 {
+      font-family: 'Orbitron', sans-serif;
+      color: #00f0ff;
+      margin-bottom: 15px;
+      text-shadow: 0 0 15px #00f0ff;
+    }
+    .container p {
+      margin-bottom: 25px;
+      color: #b0b0ff;
+      font-size: 1rem;
+    }
+
+    /* Input Fields */
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      border-radius: 50px;
+      border: none;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 1rem;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #c0c0ff;
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 14px 0;
+      border-radius: 50px;
+      border: none;
+      font-weight: bold;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-primary {
+      background: #00ff9d;
+      color: #0a0a1f;
+      box-shadow: 0 0 25px #00ff9d80;
+    }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px #00ff9d80;
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #00f0ff;
+      color: #00f0ff;
+    }
+    .btn-secondary:hover {
+      background: rgba(0,240,255,0.15);
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 50px;
+      padding: 30px 5%;
+      text-align: center;
+      color: #9090cc;
+      border-top: 1px solid #00f0ff20;
+    }
+    footer a { color: #00f0ff; margin: 0 8px; text-decoration: none; }
+
+  </style>
 </head>
-  <body>
-    <h1>Create Your Gamer Profile</h1>
+<body>
 
-    <form>
-  <label>Gamer Name:</label><br />
-  <input type="text" id="gamerName" /><br /><br />
+  <nav>
+    <div class="logo">LinkXP Gaming</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#community">Community</a>
+    </div>
+  </nav>
 
-  <label>Main Game:</label><br />
-  <input type="text" id="mainGame" /><br /><br />
+  <div class="container">
+    <h1>Create Your Profile</h1>
+    <p>Join the ultimate gamer community. Share your achievements, find squads, and level up!</p>
 
-  <label>Skill Level:</label><br />
-  <select id="skillLevel">
-    <option>Beginner</option>
-    <option>Intermediate</option>
-    <option>Advanced</option>
-  </select><br /><br />
+    <input type="text" placeholder="Username" />
+    <input type="email" placeholder="Email" />
+    <input type="password" placeholder="Password" />
+    <select>
+      <option selected disabled>Favorite Game Genre</option>
+      <option>FPS</option>
+      <option>MOBA</option>
+      <option>RPG</option>
+      <option>Battle Royale</option>
+      <option>Strategy</option>
+      <option>Other</option>
+    </select>
+    <textarea placeholder="Short Bio (max 100 characters)"></textarea>
 
-  <!-- NEW AVATAR FIELD -->
-  <label>Profile Picture (optional):</label><br>
-  <input type="file" id="avatar" accept="image/*"><br><br>
+    <button class="btn btn-primary" onclick="alert('Profile creation coming soon!')">Create Profile</button>
+    <button class="btn btn-secondary" onclick="window.location.href='index.html'">Back to Home</button>
+  </div>
 
-  <button type="button" onclick="saveProfile()">Save Profile</button>
-</form>
+  <footer>
+    <p>Privacy Policy • Terms of Service • Contact Us</p>
+    <p>© 2026 LinkXP Gaming. All Rights Reserved.</p>
+  </footer>
 
-  <script>
-function generateBio(mainGame, skillLevel) {
-  if (skillLevel === "Beginner") {
-    return `New player of ${mainGame}, eager to learn and have fun!`;
-  } else if (skillLevel === "Intermediate") {
-    return `Intermediate ${mainGame} player focused on teamwork and improvement.`;
-  } else if (skillLevel === "Advanced") {
-    return `Advanced ${mainGame} player mastering strategies and leading squads.`;
-  }
-}
-
-function generateTags(mainGame, skillLevel) {
-  const tags = [];
-  if (skillLevel === "Beginner") {
-    tags.push("Learner", "Casual", "Fun-Loving");
-  } else if (skillLevel === "Intermediate") {
-    tags.push("Team Player", "Strategic", "Competitive");
-  } else {
-    tags.push("Pro Gamer", "Leader", "Squad Master");
-  }
-  tags.push(mainGame);
-  return tags;
-}
-
-function saveProfile() {
-  const gamerName = document.getElementById("gamerName").value;
-  const mainGame = document.getElementById("mainGame").value;
-  const skillLevel = document.getElementById("skillLevel").value;
-
-  // Handle avatar
-  const avatarInput = document.getElementById("avatar");
-  let avatarData = "";
-  if (avatarInput.files.length > 0) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      localStorage.setItem("avatar", e.target.result);
-      finishSave();
-    };
-    reader.readAsDataURL(avatarInput.files[0]);
-  } else {
-    localStorage.setItem("avatar", "");
-    finishSave();
-  }
-
-  function finishSave() {
-    const aiBio = generateBio(mainGame, skillLevel);
-    const aiTags = generateTags(mainGame, skillLevel);
-
-    localStorage.setItem("gamerName", gamerName);
-    localStorage.setItem("mainGame", mainGame);
-    localStorage.setItem("skillLevel", skillLevel);
-    localStorage.setItem("aiBio", aiBio);
-    localStorage.setItem("aiTags", JSON.stringify(aiTags));
-
-    window.location.href = "profile.html";
-  }
-}
-
-// Regenerate Bio function
-function regenerateBio() {
-  const mainGame = localStorage.getItem("mainGame");
-  const skillLevel = localStorage.getItem("skillLevel");
-  const newBio = generateBio(mainGame, skillLevel);
-  localStorage.setItem("aiBio", newBio);
-  location.reload();
-}
-</script>
-  </body>
+</body>
 </html>
