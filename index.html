@@ -1,43 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LinkXP – Your Gamer Identity</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkXP - Your Gamer Identity</title>
+  
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: linear-gradient(135deg, #0f172a, #020617);
       color: #e5e7eb;
       text-align: center;
-      padding: 60px 20px;
+      min-height: 100vh;
+      padding: 0 20px;
+    }
+
+    header {
+      padding: 100px 20px 60px;
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 3.8rem;
+      font-weight: bold;
       color: #38bdf8;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
     }
 
-    p {
-      max-width: 600px;
-      margin: 0 auto 30px;
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #cbd5f5;
+    header p {
+      font-size: 1.35rem;
+      color: #cbd5e1;
+      max-width: 580px;
+      margin: 0 auto 40px;
+      line-height: 1.4;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
     }
 
     .cta {
       display: inline-block;
-      padding: 14px 28px;
-      margin: 10px;
-      background: #22c55e;
-      color: #022c22;
-      text-decoration: none;
+      padding: 14px 32px;
+      font-size: 1.1rem;
       font-weight: bold;
-      border-radius: 8px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.25s ease;
+    }
+
+    .cta.primary {
+      background: #22c55e;
+      color: white;
+      box-shadow: 0 4px 20px rgba(34, 197, 94, 0.35);
+    }
+
+    .cta.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(34, 197, 94, 0.5);
     }
 
     .cta.secondary {
@@ -46,41 +77,111 @@
       border: 2px solid #38bdf8;
     }
 
-    .cta:hover {
+    .cta.secondary:hover {
+      background: rgba(56, 189, 248, 0.12);
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    .tags {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      max-width: 720px;
+      margin: 0 auto 80px;
+    }
+
+    .tag {
+      background: rgba(56, 189, 248, 0.15);
+      color: #7dd3fc;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(56, 189, 248, 0.3);
+      transform: scale(1.08);
+    }
+
+    .example-section {
+      max-width: 700px;
+      margin: 0 auto 100px;
+    }
+
+    .example-section h2 {
+      font-size: 2.2rem;
+      color: #60a5fa;
+      margin-bottom: 30px;
+    }
+
+    .profile-card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .profile-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .profile-card img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #38bdf8;
+      margin-bottom: 20px;
     }
 
     footer {
-      margin-top: 60px;
-      font-size: 0.85rem;
-      color: #94a3b8;
+      padding: 60px 20px;
+      color: #64748b;
+      font-size: 0.9rem;
     }
   </style>
 </head>
 <body>
 
-  <h1>LinkXP</h1>
-  <p>
-  One profile for every gamer.<br>
-  Show what you play, how you play, and who you want to game with —
-  no stat scraping, no tracking, just gamers connecting.
-</p>
+  <header>
+    <h1>LinkXP</h1>
+    <p>Your ultimate gamer identity — link all your profiles, stats, clips & personality in one powerful place.</p>
+    
+    <div class="cta-buttons">
+      <a href="#" class="cta primary">Create Your Profile →</a>
+      <a href="#" class="cta secondary">See Example Profile</a>
+    </div>
+  </header>
 
-<div class="tags">
-  <a href="#" class="tag">🔥 Team Player</a>
-  <a href="#" class="tag">🎯 Competitive</a>
-  <a href="#" class="tag">🧠 Strategic</a>
-  <a href="#" class="tag">⚡ Casual</a>
-  <a href="#" class="tag">🎮 Valorant</a>
-  <a href="#" class="tag">🛡️ Apex Legends</a>
-</div> 
-  <a class="cta" href="setup.html">Create Your Gamer Profile</a>
-  <a class="cta secondary" href="profile.html">View Example Profile</a>
-<p style="margin-top:40px;font-size:0.95rem;color:#94a3b8;">
-  Share your LinkXP profile anywhere — Discord, Twitch, TikTok, or Twitter.
-</p>  <footer>
-    © 2026 LinkXP • Built for gamers
+  <section class="tags">
+    <a href="#" class="tag">🔥 Team Player</a>
+    <a href="#" class="tag">🎯 Competitive</a>
+    <a href="#" class="tag">🧠 Strategic</a>
+    <a href="#" class="tag">⚡ Casual</a>
+    <a href="#" class="tag">🎮 Valorant</a>
+    <a href="#" class="tag">🛡️ Apex</a>
+    <a href="#" class="tag">🌌 Warzone</a>
+  </section>
+
+  <section class="example-section">
+    <h2>Featured Gamer Profile</h2>
+    <div class="profile-card">
+      <!-- For now use placeholder — later replace with real screenshot -->
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="Gamer avatar">
+      <h3 style="margin-bottom: 8px;">AxpX</h3>
+      <p>Level 72 • FPS Master • Always positive vibe</p>
+      <p style="margin-top: 16px; color: #94a3b8; font-size: 0.95rem;">
+        Valorant • Apex • Fortnite • 1.8K+ hours
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 LinkXP • Made for gamers, by gamers
   </footer>
 
 </body>
