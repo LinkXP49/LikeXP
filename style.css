@@ -6,10 +6,47 @@ body {
   padding: 20px;
 }
 
-h1 {
-  color: #ff4c4c;
+header {
+  padding: 80px 20px 40px;
 }
 
+header h1 {
+  font-size: 3rem;
+  color: #38bdf8;
+  margin-bottom: 10px;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: #cbd5f5;
+  margin-bottom: 30px;
+}
+
+.example-profile {
+  margin: 50px auto;
+  max-width: 700px;
+}
+
+.profile-card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  color: #e5e7eb;
+}
+
+.profile-card img {
+  width: 120px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+footer {
+  margin-top: 60px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: center;
+}
 label {
   font-weight: bold;
 }
