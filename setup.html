@@ -61,11 +61,12 @@
   <button onclick="signup()">Create Account</button>
 </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-
+<!-- Firebase App (core) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<!-- Firebase Firestore Database -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyB9oTmpZPHu7q1sWDczKo9GzA4qAOHwmME",
@@ -76,26 +77,11 @@ const firebaseConfig = {
   appId: "1:708651907081:web:fc5527a7f67b51afb260d8",
   measurementId: "G-MHF0RXKFZ8"
 };
+  firebase.initializeApp(firebaseConfig);
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-  function signup() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const username = document.getElementById("username").value;
-
-    auth.createUserWithEmailAndPassword(email, password)
-      .then(cred => {
-        return db.collection("users").doc(cred.user.uid).set({
-          username,
-          email,
-          createdAt: new Date()
-        });
-      })
-      .then(() => window.location.href = "index.html")
-      .catch(err => alert(err.message));
-  }
-</script>
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>//
 
 </body>
 </html>
