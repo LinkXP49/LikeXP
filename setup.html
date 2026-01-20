@@ -114,21 +114,19 @@
 
   <!-- 🔑 FIREBASE CONFIG (PASTE YOUR KEYS HERE) -->
   <script>
-    const firebaseConfig = {
-      apiKey: "PASTE_API_KEY_HERE",
-      authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-      projectId: "PASTE_PROJECT_ID",
-      storageBucket: "PASTE_PROJECT_ID.appspot.com",
-      messagingSenderId: "PASTE_SENDER_ID",
-      appId: "PASTE_APP_ID"
-    };
+const firebaseConfig = {
+  apiKey: "AIzaSyB9oTmpZPHu7q1sWDczKo9GzA4qAOHwmME",
+  authDomain: "linkxp.firebaseapp.com",
+  projectId: "linkxp",
+  storageBucket: "linkxp.firebasestorage.app",
+  messagingSenderId: "708651907081",
+  appId: "1:708651907081:web:fc5527a7f67b51afb260d8",
+  measurementId: "G-MHF0RXKFZ8"
+};
 
-    firebase.initializeApp(firebaseConfig);
-
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-  </script>
-
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+     <script>
   <!-- 🧠 CREATE PROFILE LOGIC -->
   <script>
     function createProfile() {
