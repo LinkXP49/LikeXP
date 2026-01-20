@@ -186,12 +186,41 @@ footer a { color:#00f0ff; margin:0 12px; text-decoration:none; }
   <p>© 2026 LinkXP Gaming. All Rights Reserved.</p>
 </footer>
 
-<script>
-function scrollToSection(id){
-  const el = document.getElementById(id);
-  if(el) el.scrollIntoView({behavior:'smooth'});
-}
-</script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
+<script>
+  // 🔥 Firebase Configuration (PASTE YOUR REAL VALUES)
+  const firebaseConfig = {
+    apiKey: "PASTE_API_KEY_HERE",
+    authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
+    projectId: "PASTE_PROJECT_ID",
+    storageBucket: "PASTE_PROJECT_ID.appspot.com",
+    messagingSenderId: "PASTE_SENDER_ID",
+    appId: "PASTE_APP_ID"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // OPTIONAL: detect login state (for later)
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      console.log("Logged in as:", user.email);
+      // later we can swap Login → Profile automatically
+    } else {
+      console.log("No user logged in");
+    }
+  });
+
+  function scrollToSection(id){
+    const el = document.getElementById(id);
+    if(el) el.scrollIntoView({behavior:'smooth'});
+  }
+</script>
 </body>
 </html>
