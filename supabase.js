@@ -1,8 +1,7 @@
 // Initialize Supabase
-const SUPABASE_URL = 'https://your-project-ref.supabase.co';
-const SUPABASE_ANON_KEY = 'your-anon-key';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
+const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co
+const SUPABASE_ANON_KEY = sb_secret_a1ah9xBAVbiXls5hDBeMAw_TUsBCNhP
+const supabase = supabase.createClient(https://ekttgxbdhxedtpggurpj.supabase.co, sb_secret_a1ah9xBAVbiXls5hDBeMAw_TUsBCNhP 
 // Example: Check if a user is logged in
 supabase.auth.onAuthStateChange((event, session) => {
     if(session?.user) {
