@@ -1,119 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>LinkXP – Create Your Gamer Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <title>Create Profile | LinkXP</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
 
   <style>
     body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0f0c29, #1a103f, #000814);
-      color: #e0e0ff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      font-family: Roboto, sans-serif;
+      background: linear-gradient(135deg,#0f0c29,#1a103f,#000814);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
     }
-
-    .container {
-      background: rgba(30,25,70,0.75);
-      border-radius: 20px;
-      padding: 40px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 0 40px #00f0ff40;
-      text-align: center;
+    .box {
+      background:rgba(20,20,60,.8);
+      padding:40px;
+      border-radius:16px;
+      width:100%;
+      max-width:420px;
+      text-align:center;
+      box-shadow:0 0 40px #00ff9d55;
     }
-
     h1 {
-      font-family: 'Orbitron', sans-serif;
-      margin-bottom: 10px;
-      color: #00f0ff;
+      font-family:Orbitron;
+      color:#00ff9d;
     }
-
-    p {
-      font-size: 0.95rem;
-      color: #b0b0ff;
-      margin-bottom: 25px;
+    input {
+      width:100%;
+      padding:14px;
+      margin:10px 0;
+      border-radius:8px;
+      border:none;
     }
-
-    input, textarea {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 14px;
-      border-radius: 10px;
-      border: none;
-      outline: none;
-      background: rgba(255,255,255,0.08);
-      color: white;
-      font-size: 1rem;
-    }
-
-    textarea {
-      resize: none;
-      height: 90px;
-    }
-
     button {
-      width: 100%;
-      padding: 14px;
-      border-radius: 30px;
-      border: none;
-      background: #00ff9d;
-      color: #0a0a1f;
-      font-weight: bold;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: 0.3s;
-      box-shadow: 0 0 20px #00ff9d80;
-    }
-
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 35px #00ff9d;
-    }
-
-    .note {
-      margin-top: 16px;
-      font-size: 0.85rem;
-    }
-
-    .note a {
-      color: #00f0ff;
-      text-decoration: none;
+      width:100%;
+      padding:14px;
+      background:#00ff9d;
+      border:none;
+      border-radius:30px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:10px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Create Profile</h1>
-    <p>Your gamer identity starts here.</p>
+<div class="box">
+  <h1>Create Profile</h1>
 
-    <input type="email" id="email" placeholder="Email" />
-    <input type="password" id="password" placeholder="Password" />
-    <input type="text" id="username" placeholder="Gamer Tag" />
-    <textarea id="bio" placeholder="Short gamer bio"></textarea>
+  <input id="username" placeholder="Gamer Tag">
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
 
-    <button onclick="createProfile()">Create Profile</button>
+  <button onclick="signup()">Create Account</button>
+</div>
 
-    <div class="note">
-      Already have an account?
-      <a href="login.html">Login</a>
-    </div>
-  </div>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
-  <!-- 🔥 FIREBASE SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-
-  <!-- 🔑 FIREBASE CONFIG (PASTE YOUR KEYS HERE) -->
-  <script>
+<script>
 const firebaseConfig = {
   apiKey: "AIzaSyB9oTmpZPHu7q1sWDczKo9GzA4qAOHwmME",
   authDomain: "linkxp.firebaseapp.com",
@@ -126,38 +79,24 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-     <script>
-  <!-- 🧠 CREATE PROFILE LOGIC -->
-  <script>
-    function createProfile() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const username = document.getElementById("username").value;
-      const bio = document.getElementById("bio").value;
+const analytics = getAnalytics(app);
+  function signup() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
 
-      if (!email || !password || !username) {
-        alert("Please fill out all required fields.");
-        return;
-      }
-
-      auth.createUserWithEmailAndPassword(email, password)
-        .then((cred) => {
-          return db.collection("users").doc(cred.user.uid).set({
-            email: email,
-            username: username,
-            bio: bio,
-            createdAt: new Date()
-          });
-        })
-        .then(() => {
-          alert("Profile created successfully!");
-          window.location.href = "index.html";
-        })
-        .catch((error) => {
-          alert(error.message);
+    auth.createUserWithEmailAndPassword(email, password)
+      .then(cred => {
+        return db.collection("users").doc(cred.user.uid).set({
+          username,
+          email,
+          createdAt: new Date()
         });
-    }
-  </script>
+      })
+      .then(() => window.location.href = "index.html")
+      .catch(err => alert(err.message));
+  }
+</script>
 
 </body>
 </html>
