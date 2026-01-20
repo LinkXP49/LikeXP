@@ -1,87 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Create Profile | LinkXP</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Roboto&display=swap" rel="stylesheet">
-
-  <style>
-    body {
-      font-family: Roboto, sans-serif;
-      background: linear-gradient(135deg,#0f0c29,#1a103f,#000814);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      min-height:100vh;
-    }
-    .box {
-      background:rgba(20,20,60,.8);
-      padding:40px;
-      border-radius:16px;
-      width:100%;
-      max-width:420px;
-      text-align:center;
-      box-shadow:0 0 40px #00ff9d55;
-    }
-    h1 {
-      font-family:Orbitron;
-      color:#00ff9d;
-    }
-    input {
-      width:100%;
-      padding:14px;
-      margin:10px 0;
-      border-radius:8px;
-      border:none;
-    }
-    button {
-      width:100%;
-      padding:14px;
-      background:#00ff9d;
-      border:none;
-      border-radius:30px;
-      font-weight:bold;
-      cursor:pointer;
-      margin-top:10px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkXP – Create Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+body {
+  font-family:'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+  color:#e0e0ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  margin:0;
+}
+.container {
+  background: rgba(20,15,50,0.85);
+  padding:40px;
+  border-radius:16px;
+  border:1px solid #00f0ff40;
+  width:380px;
+  text-align:center;
+}
+.container h2 { 
+  font-family:'Orbitron', sans-serif; 
+  color:#00f0ff; 
+  margin-bottom:24px; 
+}
+.container input, .container textarea, .container select {
+  width:100%;
+  padding:12px 16px;
+  margin-bottom:16px;
+  border-radius:8px;
+  border:none;
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+}
+.container textarea { resize:none; }
+.container button {
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:50px;
+  background:#00ff9d;
+  color:#0a0a1f;
+  font-weight:bold;
+  cursor:pointer;
+  transition: all 0.3s;
+}
+.container button:hover { 
+  box-shadow:0 0 20px #00ff9d; 
+  transform:scale(1.02);
+}
+.container a { 
+  color:#00f0ff; 
+  text-decoration:none; 
+  font-weight:bold;
+}
+</style>
 </head>
 <body>
 
-<div class="box">
-  <h1>Create Profile</h1>
+<div class="container">
+  <h2>Create Your LinkXP Profile</h2>
 
-  <input id="username" placeholder="Gamer Tag">
-  <input id="email" type="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
-
-  <button onclick="signup()">Create Account</button>
+  <input type="text" id="username" placeholder="Username">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+  
+  <select id="genre">
+    <option value="" disabled selected>Select Favorite Genre</option>
+    <option value="FPS">FPS</option>
+    <option value="RPG">RPG</option>
+    <option value="MOBA">MOBA</option>
+    <option value="Battle Royale">Battle Royale</option>
+    <option value="Simulation">Simulation</option>
+  </select>
+  
+  <textarea id="bio" placeholder="Write a short bio..." rows="3"></textarea>
+  
+  <input type="text" id="tags" placeholder="Add profile tags (comma separated)">
+  
+  <button onclick="createProfile()">Create Profile</button>
+  
+  <p style="margin-top:16px; font-size:0.9rem;">Already have an account? <a href="login.html">Login here</a></p>
 </div>
 
-<!-- Firebase App (core) -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<!-- Firebase Auth -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<!-- Firebase Firestore Database -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyB9oTmpZPHu7q1sWDczKo9GzA4qAOHwmME",
-  authDomain: "linkxp.firebaseapp.com",
-  projectId: "linkxp",
-  storageBucket: "linkxp.firebasestorage.app",
-  messagingSenderId: "708651907081",
-  appId: "1:708651907081:web:fc5527a7f67b51afb260d8",
-  measurementId: "G-MHF0RXKFZ8"
-};
-  firebase.initializeApp(firebaseConfig);
+function createProfile() {
+  const username = document.getElementById('username').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const genre = document.getElementById('genre').value;
+  const bio = document.getElementById('bio').value.trim();
+  const tags = document.getElementById('tags').value.trim();
 
-  const auth = firebase.auth();
-  const db = firebase.firestore();
-</script>//
+  if(!username || !email || !password) {
+    alert("Please fill in all required fields!");
+    return;
+  }
+
+  // Simulate saving to a database
+  const profileData = {
+    username,
+    email,
+    password,
+    favoriteGenre: genre,
+    bio,
+    tags: tags.split(',').map(tag => tag.trim())
+  };
+
+  console.log("Profile created:", profileData);
+
+  alert("Profile created successfully! Check console for profile data.");
+  
+  // Reset form
+  document.getElementById('username').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('password').value = '';
+  document.getElementById('genre').value = '';
+  document.getElementById('bio').value = '';
+  document.getElementById('tags').value = '';
+}
+</script>
 
 </body>
 </html>
