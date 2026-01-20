@@ -191,21 +191,18 @@ footer a { color:#00f0ff; margin:0 12px; text-decoration:none; }
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
 
 <script>
-  // 🔥 Firebase Configuration (PASTE YOUR REAL VALUES)
-  const firebaseConfig = {
-    apiKey: "PASTE_API_KEY_HERE",
-    authDomain: "PASTE_PROJECT_ID.firebaseapp.com",
-    projectId: "PASTE_PROJECT_ID",
-    storageBucket: "PASTE_PROJECT_ID.appspot.com",
-    messagingSenderId: "PASTE_SENDER_ID",
-    appId: "PASTE_APP_ID"
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyB9oTmpZPHu7q1sWDczKo9GzA4qAOHwmME",
+  authDomain: "linkxp.firebaseapp.com",
+  projectId: "linkxp",
+  storageBucket: "linkxp.firebasestorage.app",
+  messagingSenderId: "708651907081",
+  appId: "1:708651907081:web:fc5527a7f67b51afb260d8",
+  measurementId: "G-MHF0RXKFZ8"
+};
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
   // OPTIONAL: detect login state (for later)
   auth.onAuthStateChanged(user => {
