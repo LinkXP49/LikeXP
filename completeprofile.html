@@ -85,6 +85,7 @@ document.getElementById('completeForm').onsubmit = async (e) => {
   window.location.href = 'profile.html?u=' + user.user_metadata.username;
 };
 <script>
+completion.innerText = `Profile Completion: ${calcCompletion(profile)}%`;
 function calcCompletion(data) {
   let total = 8;
   let filled = 0;
