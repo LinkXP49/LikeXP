@@ -10,3 +10,26 @@ supabase.auth.onAuthStateChange((event, session) => {
         console.log('User is logged out');
     }
 });
+<script>
+(async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  const bar = document.getElementById('user-bar');
+
+  if (!bar) return;
+
+  if (user) {
+    bar.innerHTML = `
+      <span>👤 ${user.email}</span>
+      <a href="createprofile.html">My Profile</a>
+      <button id="logout">Logout</button>
+    `;
+
+    document.getElementById('logout').onclick = async () => {
+      await supabase.auth.signOut();
+      location.reload();
+    };
+  } else {
+    bar.innerHTML = `<a href="login.html">Login</a>`;
+  }
+})();
+</script>
