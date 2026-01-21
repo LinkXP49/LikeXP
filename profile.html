@@ -43,6 +43,27 @@ tags.forEach(tag => {
   li.textContent = tag;
   tagsList.appendChild(li);
 });
+  // supabase.js
+  
+const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co';
+const SUPABASE_ANON_KEY = sb_publishable_SHZvY63CAzzqrJHezW9-Lg_1TjFvHfZ
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+// Session persistence check
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    console.log('Logged in:', session.user.email);
+  } else {
+    console.log('Logged out');
+  }
+  <!-- 1️⃣ Load Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2️⃣ Load your config -->
+<script src="supabase.js"></script> });  <style>
 </script>
   </body>
 </html>
