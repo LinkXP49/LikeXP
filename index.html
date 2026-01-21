@@ -1,130 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <div id="user-bar" style="display:flex; gap:12px; align-items:center;"></div>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LinkXP – Connect, Game & Level Up!</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
-      color: #e0e0ff;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LinkXP – Connect, Game & Level Up!</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+    color: #e0e0ff;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(15, 12, 41, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 15px 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-    }
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      color: #00f0ff;
-      text-shadow: 0 0 15px #00f0ff;
-    }
-    .nav-links a {
-      color: #d0d0ff;
-      margin: 0 18px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: #00f0ff; }
-    .auth-btns button {
-      padding: 8px 20px;
-      margin-left: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .login { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
-    .signup { background: #00ff9d; color: #0a0a1f; }
-    .login:hover { background: rgba(0,240,255,0.15); }
-    .signup:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(15, 12, 41, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+  }
+  .logo {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    color: #00f0ff;
+    text-shadow: 0 0 15px #00f0ff;
+  }
+  .nav-links a {
+    color: #d0d0ff;
+    margin: 0 18px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: #00f0ff; }
+  .auth-btns button {
+    padding: 8px 20px;
+    margin-left: 12px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .login { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
+  .signup { background: #00ff9d; color: #0a0a1f; }
+  .login:hover { background: rgba(0,240,255,0.15); }
+  .signup:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
 
-    header {
-      padding: 160px 5% 100px;
-      text-align: center;
-      background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
-      position: relative;
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(15,12,41,0.85));
-    }
-    header > * { position: relative; z-index: 2; }
-    h1 { font-family: 'Orbitron', sans-serif; font-size: 3.8rem; color: #fff; text-shadow: 0 0 30px #00f0ff, 0 0 60px #ff00aa; margin-bottom: 16px; }
-    header p { font-size: 1.4rem; max-width: 680px; margin: 0 auto 40px; color: #d0d0ff; }
-    .hero-ctas button {
-      padding: 14px 36px;
-      font-size: 1.1rem;
-      font-weight: bold;
-      border: none;
-      border-radius: 50px;
-      margin: 12px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .join { background: #00ff9d; color: #0a0a1f; box-shadow: 0 0 25px #00ff9d80; }
-    .learn { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
-    .join:hover { transform: translateY(-4px); box-shadow: 0 0 40px #00ff9d; }
-    .learn:hover { background: rgba(0,240,255,0.15); }
+  header {
+    padding: 160px 5% 100px;
+    text-align: center;
+    background: url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=2000') center/cover no-repeat;
+    position: relative;
+  }
+  header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(15,12,41,0.85));
+  }
+  header > * { position: relative; z-index: 2; }
+  h1 { font-family: 'Orbitron', sans-serif; font-size: 3.8rem; color: #fff; text-shadow: 0 0 30px #00f0ff, 0 0 60px #ff00aa; margin-bottom: 16px; }
+  header p { font-size: 1.4rem; max-width: 680px; margin: 0 auto 40px; color: #d0d0ff; }
+  .hero-ctas button {
+    padding: 14px 36px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    margin: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .join { background: #00ff9d; color: #0a0a1f; box-shadow: 0 0 25px #00ff9d80; }
+  .learn { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
+  .join:hover { transform: translateY(-4px); box-shadow: 0 0 40px #00ff9d; }
+  .learn:hover { background: rgba(0,240,255,0.15); }
 
-    section { padding: 80px 5%; }
-    section h2 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; margin-bottom: 30px; }
+  section { padding: 80px 5%; }
+  section h2 { font-family: 'Orbitron', sans-serif; font-size: 2.8rem; margin-bottom: 30px; }
 
-    #features .feature-card {
-      background: rgba(30,25,70,0.6);
-      padding: 30px;
-      border-radius: 16px;
-      width: 320px;
-      text-align: center;
-      border: 1px solid #00f0ff40;
-      transition: all 0.4s;
-      display: inline-block;
-      margin: 0 10px 20px 10px;
-    }
-    #features .feature-card:hover { transform: translateY(-12px); box-shadow: 0 0 30px #00f0ff60; }
-    #features h3 { color: #00ff9d; margin: 20px 0 12px; }
+  #features .feature-card {
+    background: rgba(30,25,70,0.6);
+    padding: 30px;
+    border-radius: 16px;
+    width: 320px;
+    text-align: center;
+    border: 1px solid #00f0ff40;
+    transition: all 0.4s;
+    display: inline-block;
+    margin: 0 10px 20px 10px;
+  }
+  #features .feature-card:hover { transform: translateY(-12px); box-shadow: 0 0 30px #00f0ff60; }
+  #features h3 { color: #00ff9d; margin: 20px 0 12px; }
 
-    #about h3 { color: #00ff9d; margin-top: 20px; }
+  #about h3 { color: #00ff9d; margin-top: 20px; }
 
-    .profiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-    .profile-card { background: rgba(30,25,70,0.7); border-radius: 16px; overflow: hidden; border: 1px solid #ff00aa40; transition: all 0.3s; text-align: center; padding: 20px; }
-    .profile-card:hover { transform: translateY(-10px); box-shadow: 0 0 35px #ff00aa80; }
-    .profile-card img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #00f0ff; margin-bottom: 16px; }
-    .profile-card h4 { color: #fff; margin-bottom: 8px; }
-    .profile-card p { color: #b0b0ff; font-size: 0.95rem; margin-bottom: 16px; }
-    .follow-btn { background: #00ff9d; color: #0a0a1f; border: none; padding: 10px 28px; border-radius: 50px; font-weight: bold; cursor: pointer; }
-    .follow-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
+  .profiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+  .profile-card { background: rgba(30,25,70,0.7); border-radius: 16px; overflow: hidden; border: 1px solid #ff00aa40; transition: all 0.3s; text-align: center; padding: 20px; }
+  .profile-card:hover { transform: translateY(-10px); box-shadow: 0 0 35px #ff00aa80; }
+  .profile-card img { width: 110px; height: 110px; border-radius: 50%; border: 3px solid #00f0ff; margin-bottom: 16px; }
+  .profile-card h4 { color: #fff; margin-bottom: 8px; }
+  .profile-card p { color: #b0b0ff; font-size: 0.95rem; margin-bottom: 16px; }
+  .follow-btn { background: #00ff9d; color: #0a0a1f; border: none; padding: 10px 28px; border-radius: 50px; font-weight: bold; cursor: pointer; }
+  .follow-btn:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
 
-    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
-    .news-item { background: rgba(40,35,80,0.5); border-radius: 12px; overflow: hidden; transition: transform 0.3s; }
-    .news-item:hover { transform: scale(1.04); }
-    .news-item img { width: 100%; height: 180px; object-fit: cover; }
-    .news-item div { padding: 20px; }
-    .news-item a { color: #00f0ff; text-decoration: none; font-weight: bold; }
+  .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto; }
+  .news-item { background: rgba(40,35,80,0.5); border-radius: 12px; overflow: hidden; transition: transform 0.3s; }
+  .news-item:hover { transform: scale(1.04); }
+  .news-item img { width: 100%; height: 180px; object-fit: cover; }
+  .news-item div { padding: 20px; }
+  .news-item a { color: #00f0ff; text-decoration: none; font-weight: bold; }
 
-    footer { padding: 60px 5% 30px; text-align: center; color: #9090cc; border-top: 1px solid #00f0ff20; }
-    footer a { color: #00f0ff; margin: 0 12px; text-decoration: none; }
+  footer { padding: 60px 5% 30px; text-align: center; color: #9090cc; border-top: 1px solid #00f0ff20; }
+  footer a { color: #00f0ff; margin: 0 12px; text-decoration: none; }
 
-    @media (max-width: 768px) { h1 { font-size: 2.8rem; } .nav-links { display: none; } }
-  </style>
+  @media (max-width: 768px) { h1 { font-size: 2.8rem; } .nav-links { display: none; } }
+</style>
 </head>
 <body>
 
@@ -176,7 +175,8 @@
 <section id="community">
   <h2>Discover & Connect</h2>
   <p>Meet gamers, join communities, find trending games.</p>
-  <div class="profiles">
+  <div class="profiles" id="profiles-container">
+    <!-- Profiles will be fetched via API in the future -->
     <div class="profile-card">
       <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400" alt="ProLegend">
       <h4>ProLegend</h4>
