@@ -51,7 +51,13 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    // Session persistence check
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    console.log('Logged in:', session.user.email);
+  } else {
+    console.log('Logged out');
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 <h1 id="name"></h1>
 <p id="games"></p>
@@ -82,12 +88,6 @@ const username = params.get('u');
   twitch.innerText = 'Watch on Twitch';
 })();
 </script></script>
-    // Session persistence check
-supabase.auth.onAuthStateChange((event, session) => {
-  if (session?.user) {
-    console.log('Logged in:', session.user.email);
-  } else {
-    console.log('Logged out');
   }
   <!-- 1️⃣ Load Supabase SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
