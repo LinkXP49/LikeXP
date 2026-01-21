@@ -7,6 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
 /* simple styles for profile display */
+a { color: #00f0ff; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -16,10 +17,10 @@
 </header>
 
 <img id="avatar" style="width:140px;height:140px;border-radius:50%;display:block;margin:auto;"/>
-<p><strong>Steam:</strong> <span id="steam">Not linked</span></p>
-<p><strong>Xbox:</strong> <span id="xbox">Not linked</span></p>
-<p><strong>Favorite Games:</strong> <span id="games">None</span></p>
-<p><strong>Twitch:</strong> <a id="twitch" target="_blank">Not linked</a></p>
+
+<div id="social-links">
+  <!-- Links will be injected here -->
+</div>
 
 <a href="profile-edit.html">Edit Profile</a> | <a href="index.html">Home</a>
 
@@ -34,12 +35,35 @@ if(!currentUser){ document.body.innerHTML='Profile not found'; }
 const profile = currentUser.profile || {};
 
 document.getElementById('username').textContent = currentUser.username;
-document.getElementById('steam').textContent = profile.steam || 'Not linked';
-document.getElementById('xbox').textContent = profile.xbox || 'Not linked';
-document.getElementById('games').textContent = (profile.games||[]).join(', ') || 'None';
-document.getElementById('twitch').textContent = profile.twitch || 'Not linked';
-document.getElementById('twitch').href = profile.twitch || '#';
 document.getElementById('avatar').src = profile.avatar || 'https://via.placeholder.com/140';
+
+// Social links container
+const container = document.getElementById('social-links');
+
+const socials = {
+  Discord: profile.discord,
+  YouTube: profile.youtube,
+  Twitch: profile.twitch,
+  X: profile.x,
+  Instagram: profile.instagram,
+  TikTok: profile.tiktok
+};
+
+for(const [name, url] of Object.entries(socials)){
+  if(url){
+    const p = document.createElement('p');
+    if(name==='Discord'){
+      p.textContent = `Discord: ${url}`;
+    } else {
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      a.textContent = name;
+      p.appendChild(a);
+    }
+    container.appendChild(p);
+  }
+}
 </script>
 
 </body>
