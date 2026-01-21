@@ -49,47 +49,42 @@ document.getElementById('completeForm').addEventListener('submit', async (e) => 
   e.preventDefault();
 
   // Ensure user is logged in
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
-    window.location.href = 'login.html';
-    return;
-  }
+ <script>
+document.getElementById('completeForm').onsubmit = async (e) => {
+  e.preventDefault();
 
-  // Upload avatar (optional)
-  const avatarFile = document.getElementById('avatar').files[0];
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return location.href = 'login.html';
+
   let avatarUrl = null;
 
-  if (avatarFile) {
-    const { error } = await supabase.storage
+  if (avatar.files.length) {
+    const filePath = `${user.id}.jpg`;
+    await supabase.storage.from('avatars')
+      .upload(filePath, avatar.files[0], { upsert: true });
+
+    avatarUrl = supabase.storage
       .from('avatars')
-      .upload(`${user.id}.jpg`, avatarFile, { upsert: true });
-
-    if (!error) {
-      const { data } = supabase.storage
-        .from('avatars')
-        .getPublicUrl(`${user.id}.jpg`);
-
-      avatarUrl = data.publicUrl;
-    }
+      .getPublicUrl(filePath).data.publicUrl;
   }
 
-  // Save profile data
   await supabase.from('profiles').update({
-  avatar_url: avatarUrl,
-  bio: bio.value,
-  gender: gender.value,
-  birthday: birthday.value,
-  socials: {
-    discord: discord.value,
-    youtube: youtube.value,
-    twitch: twitch.value,
-    twitter: twitter.value,
-    instagram: instagram.value
-  }
-}).eq('user_id', user.id);
-  // Redirect to public profile
-  window.location.href = 'profile.html';
-});
+    bio: bio.value,
+    birthday: birthday.value,
+    gender: gender.value,
+    avatar_url: avatarUrl,
+    socials: {
+      discord: discord.value,
+      twitch: twitch.value,
+      youtube: youtube.value,
+      twitter: twitter.value,
+      instagram: instagram.value
+    }
+  }).eq('user_id', user.id);
+
+  window.location.href = 'profile.html?u=' + user.user_metadata.username;
+};
+</script>
   const avatarFile = document.getElementById('avatar').files[0];
 
 let avatarUrl = null;
