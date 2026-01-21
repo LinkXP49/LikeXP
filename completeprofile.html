@@ -84,23 +84,20 @@ document.getElementById('completeForm').onsubmit = async (e) => {
 
   window.location.href = 'profile.html?u=' + user.user_metadata.username;
 };
+<script>
+function calcCompletion(data) {
+  let total = 8;
+  let filled = 0;
+
+  if (data.avatar_url) filled++;
+  if (data.bio) filled++;
+  if (data.birthday) filled++;
+  if (data.gender) filled++;
+  if (data.socials?.discord) filled++;
+  if (data.socials?.twitch) filled++;
+  if (data.socials?.youtube) filled++;
+  if (data.socials?.instagram) filled++;
+
+  return Math.round((filled / total) * 100);
+}
 </script>
-  const avatarFile = document.getElementById('avatar').files[0];
-
-let avatarUrl = null;
-
-if (avatarFile) {
-  const filePath = `${user.id}.jpg`;
-
-  await supabase.storage
-    .from('avatars')
-    .upload(filePath, avatarFile, {
-      upsert: true
-    });
-
-  const { data } = supabase.storage
-    .from('avatars')
-    .getPublicUrl(filePath);
-
-  avatarUrl = data.publicUrl;
-}</script>
