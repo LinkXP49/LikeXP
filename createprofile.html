@@ -72,6 +72,10 @@ document.getElementById('profileForm').onsubmit = async (e) => {
     `Your LinkXP: <a href="profile.html?u=${username}">
      linkxp.com/profile/${username}</a>`;
 };
+  document.getElementById('link').innerHTML = `
+  🔗 Your LinkXP profile:<br>
+  <input value="${location.origin}/profile.html?u=${username}" readonly />
+`;
 </script>
   });  <style>    * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -249,7 +253,7 @@ document.getElementById('profileForm').onsubmit = async (e) => {
 <body>
 
   <nav>
-    <div class="logo">LinkXP Gaming</div>
+    <div class="logo">LinkXP</div>
     <div class="nav-links">
       <a href="#">Home</a>
       <a href="#features">Features</a>
@@ -354,7 +358,7 @@ document.getElementById('profileForm').onsubmit = async (e) => {
 
   <footer>
     <p>Privacy Policy • Terms of Service • Contact Us</p>
-    <p>© 2026 LinkXP Gaming. All Rights Reserved.</p>
+    <p>© 2026 LinkXP. All Rights Reserved.</p>
   </footer>
 
 </body>
