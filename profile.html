@@ -64,6 +64,37 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 <!-- 2️⃣ Load your config -->
 <script src="supabase.js"></script> });  <style>
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<h1 id="name"></h1>
+<p id="games"></p>
+<p id="tags"></p>
+<a id="twitch" target="_blank"></a>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const username = params.get('u');
+
+(async () => {
+  const { data } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('username', username)
+    .single();
+
+  if (!data) {
+    document.body.innerHTML = 'Profile not found';
+    return;
+  }
+
+  name.innerText = data.username;
+  games.innerText = '🎮 ' + data.favorite_games.join(', ');
+  tags.innerText =
+    `Steam: ${data.gamertags?.steam || ''} | Xbox: ${data.gamertags?.xbox || ''}`;
+  twitch.href = data.socials?.twitch;
+  twitch.innerText = 'Watch on Twitch';
+})();
+</script></script>
   </body>
 </html>
