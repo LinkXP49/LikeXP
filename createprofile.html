@@ -66,7 +66,9 @@ document.getElementById('profileForm').onsubmit = async (e) => {
     socials: {
       twitch: twitch.value
     }
-  });
+      
+// redirect to full profile setup
+window.location.href = 'completeprofile.html';  });
 
   document.getElementById('link').innerHTML =
     `Your LinkXP: <a href="profile.html?u=${username}">
