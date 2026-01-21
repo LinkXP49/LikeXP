@@ -53,7 +53,13 @@ const supabase = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_ANON_KEY
 );
-    // Session persistence check
+  if (data.avatar_url) {
+  avatar.src = data.avatar_url;
+} else {
+  avatar.src = 'default-avatar.png'; // 
+    optional fallback
+}    
+  // Session persistence check
 supabase.auth.onAuthStateChange((event, session) => {
   if (session?.user) {
     console.log('Logged in:', session.user.email);
