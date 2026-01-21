@@ -7,11 +7,6 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <script 
-  <!-- 1️⃣ Load Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- 2️⃣ Load your config -->
-<script src="supabase.js"></script> 
 // supabase.js
   
 const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co';
@@ -28,7 +23,11 @@ supabase.auth.onAuthStateChange((event, session) => {
   } else {
     console.log('Logged out');
   }
-});  <style>
+  <!-- 1️⃣ Load Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2️⃣ Load your config -->
+<script src="supabase.js"></script> });  <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Roboto', sans-serif;
