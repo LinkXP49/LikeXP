@@ -82,12 +82,20 @@ const username = params.get('u');
   }
 
   name.innerText = data.username;
-  games.innerText = '🎮 ' + data.favorite_games.join(', ');
-  tags.innerText =
-    `Steam: ${data.gamertags?.steam || ''} | Xbox: ${data.gamertags?.xbox || ''}`;
-  twitch.href = data.socials?.twitch;
+  games.innerText = data.favorite_games?.length
+  ? '🎮 ' + data.favorite_games.join(', ')
+  : '🎮 No games added yet';
+
+tags.innerText = data.gamertags
+  ? `Steam: ${data.gamertags.steam || '—'} | Xbox: ${data.gamertags.xbox || '—'}`
+  : 'No gamertags yet';
+
+if (data.socials?.twitch) {
+  twitch.href = data.socials.twitch;
   twitch.innerText = 'Watch on Twitch';
-})();
+} else {
+  twitch.innerText = 'No Twitch linked';
+}
 </script></script>
   }
   <!-- 1️⃣ Load Supabase SDK -->
