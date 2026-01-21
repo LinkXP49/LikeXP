@@ -13,23 +13,29 @@
 
 <header>
   <h1>Edit Your Profile</h1>
-  <p>Add optional info like gamertags, favorite games, Twitch, and avatar.</p>
+  <p>Add optional social links and an avatar.</p>
 </header>
 
 <div class="form-container">
   <div class="alert" id="alert"></div>
   <form id="profile-form">
-    <label for="steam">Steam Tag</label>
-    <input type="text" id="steam" placeholder="Your Steam username">
+    <label for="discord">Discord</label>
+    <input type="text" id="discord" placeholder="Discord username#1234">
 
-    <label for="xbox">Xbox Gamertag</label>
-    <input type="text" id="xbox" placeholder="Your Xbox gamertag">
+    <label for="youtube">YouTube URL</label>
+    <input type="url" id="youtube" placeholder="https://youtube.com/...">
 
     <label for="twitch">Twitch URL</label>
     <input type="url" id="twitch" placeholder="https://twitch.tv/...">
 
-    <label for="games">Favorite Games (comma separated)</label>
-    <input type="text" id="games" placeholder="Game1, Game2, Game3">
+    <label for="x">X (Twitter) URL</label>
+    <input type="url" id="x" placeholder="https://twitter.com/...">
+
+    <label for="instagram">Instagram URL</label>
+    <input type="url" id="instagram" placeholder="https://instagram.com/...">
+
+    <label for="tiktok">TikTok URL</label>
+    <input type="url" id="tiktok" placeholder="https://tiktok.com/...">
 
     <label for="avatar">Avatar URL</label>
     <input type="url" id="avatar" placeholder="Optional avatar URL">
@@ -40,31 +46,42 @@
 
 <script>
 const alertBox = document.getElementById('alert');
-function showAlert(msg){ alertBox.textContent=msg; alertBox.style.display='block'; setTimeout(()=>{alertBox.style.display='none';},3000); }
+function showAlert(msg){
+  alertBox.textContent = msg;
+  alertBox.style.display = 'block';
+  setTimeout(()=>{ alertBox.style.display='none'; }, 3000);
+}
 
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-if(!currentUser){ showAlert('No user logged in. Redirecting...'); setTimeout(()=>window.location.href='setup.html',1000); }
+if(!currentUser){
+  showAlert('No user logged in. Redirecting...');
+  setTimeout(()=>window.location.href='setup.html',1000);
+}
 
 const users = JSON.parse(localStorage.getItem('users')||'{}');
 const profile = users[currentUser.email].profile || {};
 
 // Populate existing data
-document.getElementById('steam').value = profile.steam || '';
-document.getElementById('xbox').value = profile.xbox || '';
+document.getElementById('discord').value = profile.discord || '';
+document.getElementById('youtube').value = profile.youtube || '';
 document.getElementById('twitch').value = profile.twitch || '';
-document.getElementById('games').value = (profile.games||[]).join(', ');
+document.getElementById('x').value = profile.x || '';
+document.getElementById('instagram').value = profile.instagram || '';
+document.getElementById('tiktok').value = profile.tiktok || '';
 document.getElementById('avatar').value = profile.avatar || '';
 
 // Handle form submit
 document.getElementById('profile-form').addEventListener('submit', e=>{
   e.preventDefault();
-  const steam = document.getElementById('steam').value.trim();
-  const xbox = document.getElementById('xbox').value.trim();
+  const discord = document.getElementById('discord').value.trim();
+  const youtube = document.getElementById('youtube').value.trim();
   const twitch = document.getElementById('twitch').value.trim();
-  const games = document.getElementById('games').value.split(',').map(g=>g.trim()).filter(Boolean);
+  const x = document.getElementById('x').value.trim();
+  const instagram = document.getElementById('instagram').value.trim();
+  const tiktok = document.getElementById('tiktok').value.trim();
   const avatar = document.getElementById('avatar').value.trim();
 
-  users[currentUser.email].profile = { steam, xbox, twitch, games, avatar };
+  users[currentUser.email].profile = { discord, youtube, twitch, x, instagram, tiktok, avatar };
   localStorage.setItem('users', JSON.stringify(users));
   showAlert('Profile updated!');
   setTimeout(()=>window.location.href='profile.html?u='+currentUser.username,1000);
