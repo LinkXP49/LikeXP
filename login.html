@@ -68,41 +68,91 @@
       margin-top: 10px;
     }
     .secondary-btn:hover { background: rgba(0,240,255,0.15); }
+
+    .oauth-btn {
+      background: #4285f4; /* Google blue default */
+      margin-top: 12px;
+    }
+    .oauth-btn.discord { background: #7289da; }
   </style>
 </head>
 <body>
 
   <div class="login-container">
     <h1>Login</h1>
-    <input type="text" id="username" placeholder="Enter your username">
-    <button onclick="login()">Login</button>
+
+    <!-- Manual Login -->
+    <input type="email" id="email" placeholder="Enter your email">
+    <input type="password" id="password" placeholder="Enter your password">
+    <button onclick="manualLogin()">Login</button>
+
     <button class="secondary-btn" onclick="goCreateProfile()">Create Profile</button>
+
+    <!-- OAuth Login -->
+    <button class="oauth-btn" onclick="oauthLogin('google')">Login with Google</button>
+    <button class="oauth-btn discord" onclick="oauthLogin('discord')">Login with Discord</button>
   </div>
 
   <script>
-    // Navigate to profile creation page
+    // Replace this with your Postgres provider API base URL
+    const API_BASE = 'https://your-postgres-api-provider.com';
+
     function goCreateProfile() {
       window.location.href = '/createprofile.html';
     }
 
-    // Temporary frontend login (replace with API call to Postgres provider later)
-    function login() {
-      const usernameInput = document.getElementById('username').value.trim();
-      if (!usernameInput) {
-        alert('Please enter a username.');
+    // ----------------------
+    // Manual Login
+    // ----------------------
+    async function manualLogin() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('Please enter email and password.');
         return;
       }
 
-      // LocalStorage simulation (for MVP without backend)
-      const profileData = JSON.parse(localStorage.getItem('userProfile'));
-      if (profileData && profileData.username === usernameInput) {
-        localStorage.setItem('loggedInUser', usernameInput);
-        alert('Welcome back, ' + usernameInput + '!');
-        window.location.href = '/';
-      } else {
-        alert('Username not found. Please create a profile first.');
+      try {
+        const res = await fetch(`${API_BASE}/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+          // Store session token in localStorage
+          localStorage.setItem('sessionToken', data.token);
+          alert('Welcome back, ' + data.username + '!');
+          window.location.href = '/';
+        } else {
+          alert(data.error || 'Login failed');
+        }
+      } catch (err) {
+        console.error(err);
+        alert('Network error. Try again later.');
       }
     }
+
+    // ----------------------
+    // OAuth Login
+    // ----------------------
+    function oauthLogin(provider) {
+      // Redirect user to API OAuth endpoint
+      window.location.href = `${API_BASE}/auth/oauth/${provider}?redirect=/createprofile.html`;
+    }
+
+    // ----------------------
+    // Auto-login check on page load
+    // ----------------------
+    (function checkSession() {
+      const token = localStorage.getItem('sessionToken');
+      if (token) {
+        // Optionally validate token with API
+        window.location.href = '/';
+      }
+    })();
   </script>
 
 </body>
