@@ -1,129 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LinkXP Profile</title>
-  <link rel="stylesheet" href="../style.css">
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
-      color: #e0e0ff;
-      min-height: 100vh;
-      padding: 40px;
-    }
-    h1 { color: #00f0ff; font-family: 'Orbitron', sans-serif; }
-    img { border-radius: 50%; border: 3px solid #00f0ff; margin-bottom: 16px; }
-    button { padding: 10px 20px; margin: 10px 5px; border-radius: 50px; border: none; cursor: pointer; background: #00ff9d; color: #0a0a1f; font-weight: bold; }
-    button:hover { box-shadow: 0 0 20px #00ff9d; transform: scale(1.05); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamer Profile – LinkXP</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* simple styles for profile display */
+</style>
 </head>
 <body>
 
-  <div id="profile-container">
-    <img id="avatar" src="https://via.placeholder.com/140" alt="Avatar" width="140" height="140">
-    <h1 id="name">Gamer Profile</h1>
+<header>
+  <h1 id="username">Gamer Profile</h1>
+</header>
 
-    <p><strong>Main Game:</strong> <span id="game">-</span></p>
-    <p><strong>Skill Level:</strong> <span id="skill">-</span></p>
-    <p><strong>AI Bio:</strong></p>
-    <p id="bio">-</p>
-    <p><strong>Profile Tags:</strong></p>
-    <ul id="tags"></ul>
+<img id="avatar" style="width:140px;height:140px;border-radius:50%;display:block;margin:auto;"/>
+<p><strong>Steam:</strong> <span id="steam">Not linked</span></p>
+<p><strong>Xbox:</strong> <span id="xbox">Not linked</span></p>
+<p><strong>Favorite Games:</strong> <span id="games">None</span></p>
+<p><strong>Twitch:</strong> <a id="twitch" target="_blank">Not linked</a></p>
 
-    <button onclick="regenerateBio()">Regenerate Bio</button>
-    <br><br>
-    <button onclick="copyProfileLink()">Copy Profile Link</button>
-    <button onclick="alert('Follow system coming soon')">⭐ Follow</button>
-    <br>
-    <a href="setup.html">Edit Profile</a> | <a href="index.html">Home</a>
-  </div>
+<a href="profile-edit.html">Edit Profile</a> | <a href="index.html">Home</a>
 
-  <script>
-    // ------------------------
-    // Fetch username from URL query
-    // ------------------------
-    const params = new URLSearchParams(window.location.search);
-    const username = params.get('u');
+<script>
+const params = new URLSearchParams(window.location.search);
+const username = params.get('u');
 
-    // ------------------------
-    // API Base URL (Postgres provider)
-    // ------------------------
-    const API_BASE = 'https://your-postgres-api-provider.com';
+const users = JSON.parse(localStorage.getItem('users')||'{}');
+const currentUser = Object.values(users).find(u=>u.username===username);
+if(!currentUser){ document.body.innerHTML='Profile not found'; }
 
-    async function fetchProfile(username) {
-      if (!username) {
-        loadLocalProfile();
-        return;
-      }
+const profile = currentUser.profile || {};
 
-      try {
-        const res = await fetch(`${API_BASE}/profiles?username=${encodeURIComponent(username)}`);
-        if (!res.ok) throw new Error('Profile not found');
+document.getElementById('username').textContent = currentUser.username;
+document.getElementById('steam').textContent = profile.steam || 'Not linked';
+document.getElementById('xbox').textContent = profile.xbox || 'Not linked';
+document.getElementById('games').textContent = (profile.games||[]).join(', ') || 'None';
+document.getElementById('twitch').textContent = profile.twitch || 'Not linked';
+document.getElementById('twitch').href = profile.twitch || '#';
+document.getElementById('avatar').src = profile.avatar || 'https://via.placeholder.com/140';
+</script>
 
-        const data = await res.json();
-
-        // Populate fields
-        document.getElementById("name").textContent = data.username;
-        document.getElementById("game").textContent = data.favorite_items?.[0] || '—';
-        document.getElementById("skill").textContent = data.skill_level || '—';
-        document.getElementById("bio").textContent = data.bio || '—';
-        document.getElementById("avatar").src = data.avatar_url || 'https://via.placeholder.com/140';
-
-        // Populate tags
-        const tagsList = document.getElementById("tags");
-        tagsList.innerHTML = '';
-        if (data.social_links) {
-          for (const [key, value] of Object.entries(data.social_links)) {
-            const li = document.createElement('li');
-            li.textContent = `${key}: ${value}`;
-            tagsList.appendChild(li);
-          }
-        }
-      } catch (err) {
-        console.warn(err);
-        loadLocalProfile();
-      }
-    }
-
-    // ------------------------
-    // Fallback: load profile from localStorage
-    // ------------------------
-    function loadLocalProfile() {
-      document.getElementById("name").textContent = localStorage.getItem("gamerName") || 'Unknown';
-      document.getElementById("game").textContent = localStorage.getItem("mainGame") || '—';
-      document.getElementById("skill").textContent = localStorage.getItem("skillLevel") || '—';
-      document.getElementById("bio").textContent = localStorage.getItem("aiBio") || '—';
-      document.getElementById("avatar").src = localStorage.getItem("avatar") || 'https://via.placeholder.com/140';
-
-      const tags = JSON.parse(localStorage.getItem("aiTags") || '[]');
-      const tagsList = document.getElementById("tags");
-      tagsList.innerHTML = '';
-      tags.forEach(tag => {
-        const li = document.createElement("li");
-        li.textContent = tag;
-        tagsList.appendChild(li);
-      });
-    }
-
-    // ------------------------
-    // Button helpers
-    // ------------------------
-    function regenerateBio() {
-      alert('Bio regeneration coming soon!');
-    }
-
-    function copyProfileLink() {
-      const link = `${window.location.origin}${window.location.pathname}?u=${username || localStorage.getItem("gamerName")}`;
-      navigator.clipboard.writeText(link);
-      alert('Profile link copied!');
-    }
-
-    // ------------------------
-    // Load profile on page load
-    // ------------------------
-    fetchProfile(username);
-  </script>
 </body>
 </html>
