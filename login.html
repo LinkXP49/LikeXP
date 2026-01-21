@@ -1,53 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <div id="user-bar" style="display:flex; gap:12px; align-items:center;"></div>  
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login - LinkXP </title>
-
+  <title>Login - LinkXP</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<script 
-  // supabase.js
-const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co';
-const SUPABASE_ANON_KEY = sb_publishable_SHZvY63CAzzqrJHezW9-Lg_1TjFvHfZ
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
 
-// Session persistence check
-supabase.auth.onAuthStateChange((event, session) => {  if (session?.user) {
-    console.log('Logged in:', session.user.email);
-  } else {
-    console.log('Logged out');
-  }
-// Session persistence check
-supabase.auth.onAuthStateChange((event, session) => {  <!-- 1️⃣ Load Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- 2️⃣ Load your config -->
-<script src="supabase.js"></script> });  
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-
-<button id="google">Login with Google</button>
-<button id="discord">Login with Discord</button>
-
-<script>
-document.getElementById('google').onclick = () => {
-  supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: 'createprofile.html' }
-  });
-};
-
-document.getElementById('discord').onclick = () => {
-  supabase.auth.signInWithOAuth({
-    provider: 'discord',
-    options: { redirectTo: 'createprofile.html' }
-  });
-</script> 
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -122,10 +80,12 @@ document.getElementById('discord').onclick = () => {
   </div>
 
   <script>
+    // Navigate to profile creation page
     function goCreateProfile() {
       window.location.href = '/createprofile.html';
     }
 
+    // Temporary frontend login (replace with API call to Postgres provider later)
     function login() {
       const usernameInput = document.getElementById('username').value.trim();
       if (!usernameInput) {
@@ -133,6 +93,7 @@ document.getElementById('discord').onclick = () => {
         return;
       }
 
+      // LocalStorage simulation (for MVP without backend)
       const profileData = JSON.parse(localStorage.getItem('userProfile'));
       if (profileData && profileData.username === usernameInput) {
         localStorage.setItem('loggedInUser', usernameInput);
