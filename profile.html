@@ -1,114 +1,129 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <div id="user-bar" style="display:flex; gap:12px; align-items:center;"></div>
-    <title>LinkXP Profile</title>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkXP Profile</title>
   <link rel="stylesheet" href="../style.css">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      padding: 40px;
+    }
+    h1 { color: #00f0ff; font-family: 'Orbitron', sans-serif; }
+    img { border-radius: 50%; border: 3px solid #00f0ff; margin-bottom: 16px; }
+    button { padding: 10px 20px; margin: 10px 5px; border-radius: 50px; border: none; cursor: pointer; background: #00ff9d; color: #0a0a1f; font-weight: bold; }
+    button:hover { box-shadow: 0 0 20px #00ff9d; transform: scale(1.05); }
+  </style>
 </head>
-  <body>
-   <img id="avatar" style="width:140px;height:140px;border-radius:50%;" />
-    <h1>Gamer Profile</h1>
-<p><strong>Name:</strong> <span id="name"></span></p>
-<p><strong>Main Game:</strong> <span id="game"></span></p>
-<p><strong>Skill Level:</strong> <span id="skill"></span></p>
+<body>
 
-<p><strong>AI Bio:</strong></p>
-<p id="bio"></p>
+  <div id="profile-container">
+    <img id="avatar" src="https://via.placeholder.com/140" alt="Avatar" width="140" height="140">
+    <h1 id="name">Gamer Profile</h1>
 
-<p><strong>Profile Tags:</strong></p>
-<ul id="tags"></ul>
+    <p><strong>Main Game:</strong> <span id="game">-</span></p>
+    <p><strong>Skill Level:</strong> <span id="skill">-</span></p>
+    <p><strong>AI Bio:</strong></p>
+    <p id="bio">-</p>
+    <p><strong>Profile Tags:</strong></p>
+    <ul id="tags"></ul>
 
-<button onclick="regenerateBio()">Regenerate Bio</button>
-<br><br>
-<button onclick="copyProfileLink()">Copy Profile Link</button>
-<button onclick="alert('Follow system coming soon')">
-  ⭐ Follow
-</button><a href="setup.html">Edit Profile</a> | <a href="index.html">Home</a>
+    <button onclick="regenerateBio()">Regenerate Bio</button>
+    <br><br>
+    <button onclick="copyProfileLink()">Copy Profile Link</button>
+    <button onclick="alert('Follow system coming soon')">⭐ Follow</button>
+    <br>
+    <a href="setup.html">Edit Profile</a> | <a href="index.html">Home</a>
+  </div>
 
-<script>
-document.getElementById("name").textContent = localStorage.getItem("gamerName");
-document.getElementById("game").textContent = localStorage.getItem("mainGame");
-document.getElementById("skill").textContent = localStorage.getItem("skillLevel");
-document.getElementById("bio").textContent = localStorage.getItem("aiBio");
-const avatar = localStorage.getItem("avatar");
-if (avatar) {
-  document.getElementById("profilePic").src = avatar;
-} else {
-  document.getElementById("profilePic").src = "https://via.placeholder.com/120"; // default
-}
+  <script>
+    // ------------------------
+    // Fetch username from URL query
+    // ------------------------
+    const params = new URLSearchParams(window.location.search);
+    const username = params.get('u');
 
-// Display tags
-const tags = JSON.parse(localStorage.getItem("aiTags"));
-const tagsList = document.getElementById("tags");
-tags.forEach(tag => {
-  const li = document.createElement("li");
-  li.textContent = tag;
-  tagsList.appendChild(li);
-});
-  // supabase.js
-  
-const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co';
-const SUPABASE_ANON_KEY = sb_publishable_SHZvY63CAzzqrJHezW9-Lg_1TjFvHfZ
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-  if (data.avatar_url) {
-  avatar.src = data.avatar_url;
-} else {
-  avatar.src = 'default-avatar.png'; // 
-    optional fallback
-}    
-  // Session persistence check
-supabase.auth.onAuthStateChange((event, session) => {
-  if (session?.user) {
-    console.log('Logged in:', session.user.email);
-  } else {
-    console.log('Logged out');
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<h1 id="name"></h1>
-<p id="games"></p>
-<p id="tags"></p>
-<a id="twitch" target="_blank"></a>
+    // ------------------------
+    // API Base URL (Postgres provider)
+    // ------------------------
+    const API_BASE = 'https://your-postgres-api-provider.com';
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const username = params.get('u');
+    async function fetchProfile(username) {
+      if (!username) {
+        loadLocalProfile();
+        return;
+      }
 
-(async () => {
-  const { data } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('username', username)
-    .single();
+      try {
+        const res = await fetch(`${API_BASE}/profiles?username=${encodeURIComponent(username)}`);
+        if (!res.ok) throw new Error('Profile not found');
 
-  if (!data) {
-    document.body.innerHTML = 'Profile not found';
-    return;
-  }
+        const data = await res.json();
 
-  name.innerText = data.username;
-  games.innerText = data.favorite_games?.length
-  ? '🎮 ' + data.favorite_games.join(', ')
-  : '🎮 No games added yet';
+        // Populate fields
+        document.getElementById("name").textContent = data.username;
+        document.getElementById("game").textContent = data.favorite_items?.[0] || '—';
+        document.getElementById("skill").textContent = data.skill_level || '—';
+        document.getElementById("bio").textContent = data.bio || '—';
+        document.getElementById("avatar").src = data.avatar_url || 'https://via.placeholder.com/140';
 
-tags.innerText = data.gamertags
-  ? `Steam: ${data.gamertags.steam || '—'} | Xbox: ${data.gamertags.xbox || '—'}`
-  : 'No gamertags yet';
+        // Populate tags
+        const tagsList = document.getElementById("tags");
+        tagsList.innerHTML = '';
+        if (data.social_links) {
+          for (const [key, value] of Object.entries(data.social_links)) {
+            const li = document.createElement('li');
+            li.textContent = `${key}: ${value}`;
+            tagsList.appendChild(li);
+          }
+        }
+      } catch (err) {
+        console.warn(err);
+        loadLocalProfile();
+      }
+    }
 
-if (data.socials?.twitch) {
-  twitch.href = data.socials.twitch;
-  twitch.innerText = 'Watch on Twitch';
-} else {
-  twitch.innerText = 'No Twitch linked';
-}
-</script></script>
-  }
-  <!-- 1️⃣ Load Supabase SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    // ------------------------
+    // Fallback: load profile from localStorage
+    // ------------------------
+    function loadLocalProfile() {
+      document.getElementById("name").textContent = localStorage.getItem("gamerName") || 'Unknown';
+      document.getElementById("game").textContent = localStorage.getItem("mainGame") || '—';
+      document.getElementById("skill").textContent = localStorage.getItem("skillLevel") || '—';
+      document.getElementById("bio").textContent = localStorage.getItem("aiBio") || '—';
+      document.getElementById("avatar").src = localStorage.getItem("avatar") || 'https://via.placeholder.com/140';
 
-<!-- 2️⃣ Load your config -->
-<script src="supabase.js"></script> });  <style>
-  </body>
+      const tags = JSON.parse(localStorage.getItem("aiTags") || '[]');
+      const tagsList = document.getElementById("tags");
+      tagsList.innerHTML = '';
+      tags.forEach(tag => {
+        const li = document.createElement("li");
+        li.textContent = tag;
+        tagsList.appendChild(li);
+      });
+    }
+
+    // ------------------------
+    // Button helpers
+    // ------------------------
+    function regenerateBio() {
+      alert('Bio regeneration coming soon!');
+    }
+
+    function copyProfileLink() {
+      const link = `${window.location.origin}${window.location.pathname}?u=${username || localStorage.getItem("gamerName")}`;
+      navigator.clipboard.writeText(link);
+      alert('Profile link copied!');
+    }
+
+    // ------------------------
+    // Load profile on page load
+    // ------------------------
+    fetchProfile(username);
+  </script>
+</body>
 </html>
