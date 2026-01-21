@@ -1,0 +1,75 @@
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<form id="completeForm">
+  <input type="file" id="avatar" accept="image/*" />
+
+  <input type="date" id="birthday" />
+  
+  <select id="gender">
+    <option value="">Prefer not to say</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="other">Other</option>
+  </select>
+
+  <textarea id="bio" placeholder="About you"></textarea>
+
+  <input id="discord" placeholder="Discord username" />
+  <input id="youtube" placeholder="YouTube URL" />
+  <input id="twitch" placeholder="Twitch URL" />
+  <input id="twitter" placeholder="X (Twitter) URL" />
+  <input id="instagram" placeholder="Instagram URL" />
+
+  <button type="submit">Save & View Profile</button>
+</form>
+<script>
+document.getElementById('completeForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  // Ensure user is logged in
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // Upload avatar (optional)
+  const avatarFile = document.getElementById('avatar').files[0];
+  let avatarUrl = null;
+
+  if (avatarFile) {
+    const { error } = await supabase.storage
+      .from('avatars')
+      .upload(`${user.id}.jpg`, avatarFile, { upsert: true });
+
+    if (!error) {
+      const { data } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(`${user.id}.jpg`);
+
+      avatarUrl = data.publicUrl;
+    }
+  }
+
+  // Save profile data
+  await supabase
+    .from('profiles')
+    .update({
+      avatar_url: avatarUrl,
+      birthday: document.getElementById('birthday').value,
+      gender: document.getElementById('gender').value,
+      bio: document.getElementById('bio').value,
+      socials: {
+        discord: document.getElementById('discord').value,
+        youtube: document.getElementById('youtube').value,
+        twitch: document.getElementById('twitch').value,
+        twitter: document.getElementById('twitter').value,
+        instagram: document.getElementById('instagram').value
+      }
+    })
+    .eq('user_id', user.id);
+
+  // Redirect to public profile
+  window.location.href = 'profile.html';
+});
+</script>
