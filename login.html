@@ -6,9 +6,29 @@
   <title>Login - LinkXP </title>
 
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"><
-/script>
-<script src="supabase.js"></script>  <style>
+<script 
+  <!-- 1️⃣ Load Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- 2️⃣ Load your config -->
+<script src="supabase.js"></script> 
+  // supabase.js
+
+const SUPABASE_URL = https://ekttgxbdhxedtpggurpj.supabase.co';
+const SUPABASE_ANON_KEY = sb_publishable_SHZvY63CAzzqrJHezW9-Lg_1TjFvHfZ
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+// Session persistence check
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session?.user) {
+    console.log('Logged in:', session.user.email);
+  } else {
+    console.log('Logged out');
+  }
+});  <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       font-family: 'Roboto', sans-serif;
