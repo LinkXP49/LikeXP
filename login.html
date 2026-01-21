@@ -98,7 +98,7 @@
     const API_BASE = 'https://your-postgres-api-provider.com';
 
     function goCreateProfile() {
-      window.location.href = '/createprofile.html';
+      window.location.href = 'profile-edit.html';
     }
 
     // ----------------------
@@ -140,8 +140,7 @@
     // ----------------------
     function oauthLogin(provider) {
       // Redirect user to API OAuth endpoint
-      window.location.href = `${API_BASE}/auth/oauth/${provider}?redirect=/createprofile.html`;
-    }
+      window.location.href = 'profile-edit.html';    }
 
     // ----------------------
     // Auto-login check on page load
@@ -150,8 +149,7 @@
       const token = localStorage.getItem('sessionToken');
       if (token) {
         // Optionally validate token with API
-        window.location.href = '/';
-      }
+       window.location.href = 'profile.html?u=' + username;      }
     })();
   </script>
 
