@@ -2,7 +2,16 @@
 <script src="supabase.js"></script>
 <form id="completeForm">
   <input type="file" id="avatar" accept="image/*" />
+<script>
+document.getElementById('avatar').onchange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
+  const img = document.getElementById('avatarPreview');
+  img.src = URL.createObjectURL(file);
+  img.style.display = 'block';
+};
+</script>
   <input type="date" id="birthday" />
   
   <select id="gender">
@@ -52,24 +61,38 @@ document.getElementById('completeForm').addEventListener('submit', async (e) => 
   }
 
   // Save profile data
-  await supabase
-    .from('profiles')
-    .update({
-      avatar_url: avatarUrl,
-      birthday: document.getElementById('birthday').value,
-      gender: document.getElementById('gender').value,
-      bio: document.getElementById('bio').value,
-      socials: {
-        discord: document.getElementById('discord').value,
-        youtube: document.getElementById('youtube').value,
-        twitch: document.getElementById('twitch').value,
-        twitter: document.getElementById('twitter').value,
-        instagram: document.getElementById('instagram').value
-      }
-    })
-    .eq('user_id', user.id);
-
+  await supabase.from('profiles').update({
+  avatar_url: avatarUrl,
+  bio: bio.value,
+  gender: gender.value,
+  birthday: birthday.value,
+  socials: {
+    discord: discord.value,
+    youtube: youtube.value,
+    twitch: twitch.value,
+    twitter: twitter.value,
+    instagram: instagram.value
+  }
+}).eq('user_id', user.id);
   // Redirect to public profile
   window.location.href = 'profile.html';
 });
-</script>
+  const avatarFile = document.getElementById('avatar').files[0];
+
+let avatarUrl = null;
+
+if (avatarFile) {
+  const filePath = `${user.id}.jpg`;
+
+  await supabase.storage
+    .from('avatars')
+    .upload(filePath, avatarFile, {
+      upsert: true
+    });
+
+  const { data } = supabase.storage
+    .from('avatars')
+    .getPublicUrl(filePath);
+
+  avatarUrl = data.publicUrl;
+}</script>
