@@ -12,8 +12,22 @@ document.getElementById('avatar').onchange = (e) => {
   img.style.display = 'block';
 };
 </script>
+  <h2>Complete Your Profile</h2>
+
+<div id="completion"></div>
+
+<form id="completeForm">
+
+  <label>Profile Picture</label>
+  <input type="file" id="avatar" accept="image/*" />
+
+  <label>Bio</label>
+  <textarea id="bio" placeholder="Tell people who you are as a gamer"></textarea>
+
+  <label>Birthday</label>
   <input type="date" id="birthday" />
-  
+
+  <label>Gender</label>
   <select id="gender">
     <option value="">Prefer not to say</option>
     <option value="male">Male</option>
@@ -21,17 +35,16 @@ document.getElementById('avatar').onchange = (e) => {
     <option value="other">Other</option>
   </select>
 
-  <textarea id="bio" placeholder="About you"></textarea>
-
+  <h3>Socials</h3>
   <input id="discord" placeholder="Discord username" />
-  <input id="youtube" placeholder="YouTube URL" />
   <input id="twitch" placeholder="Twitch URL" />
+  <input id="youtube" placeholder="YouTube URL" />
   <input id="twitter" placeholder="X (Twitter) URL" />
   <input id="instagram" placeholder="Instagram URL" />
 
   <button type="submit">Save & View Profile</button>
 </form>
-<script>
+  <script>
 document.getElementById('completeForm').addEventListener('submit', async (e) => {
   e.preventDefault();
 
