@@ -28,6 +28,27 @@ supabase.auth.onAuthStateChange((event, session) => {
 
 <!-- 2️⃣ Load your config -->
 <script src="supabase.js"></script> });  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<button id="google">Login with Google</button>
+<button id="discord">Login with Discord</button>
+
+<script>
+document.getElementById('google').onclick = () => {
+  supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: 'createprofile.html' }
+  });
+};
+
+document.getElementById('discord').onclick = () => {
+  supabase.auth.signInWithOAuth({
+    provider: 'discord',
+    options: { redirectTo: 'createprofile.html' }
+  });
+};
+</script> 
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
