@@ -14,8 +14,13 @@ body {
   padding: 40px 20px;
 }
 header { text-align:center; margin-bottom: 40px; }
-header h1 { font-family:'Orbitron', sans-serif; font-size:2.8rem; color:#00f0ff;
-           text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:10px; }
+header h1 {
+  font-family:'Orbitron', sans-serif;
+  font-size:2.8rem;
+  color:#00f0ff;
+  text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa;
+  margin-bottom:10px;
+}
 header p { font-size:1.2rem; color:#d0d0ff; }
 
 .profile-container {
@@ -28,9 +33,20 @@ header p { font-size:1.2rem; color:#d0d0ff; }
 }
 
 .profile-item { margin-bottom: 15px; }
-.profile-item img { max-width:150px; border-radius:50%; display:block; margin-bottom:15px; }
+.profile-item img {
+  max-width:150px;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 15px;
+}
 
-.socials a { display:block; color:#00ff9d; text-decoration:none; margin-bottom:5px; word-break: break-all; }
+.socials a {
+  display:block;
+  color:#00ff9d;
+  text-decoration:none;
+  margin-bottom:6px;
+  word-break: break-all;
+}
 .socials a:hover { text-decoration:underline; }
 </style>
 </head>
@@ -57,6 +73,9 @@ if (!currentUser || !users[currentUser.email]) {
   users[currentUser.email] = {
     username: "DevUser",
     profile: {
+      gamertag: "DevUser",
+      age: "25",
+      bio: "Welcome to my LinkXP profile.",
       avatar: "",
       discord: "DevUser#0001",
       youtube: "",
@@ -72,18 +91,38 @@ if (!currentUser || !users[currentUser.email]) {
 }
 // ===== END DEV MODE =====
 
-const profile = users[currentUser.email].profile || {};
+const userData = users[currentUser.email];
+
+// 🚨 If no profile yet, send them to create profile
+if (!userData.profile) {
+  window.location.href = "createprofile.html";
+}
+
+const profile = userData.profile;
 const container = document.getElementById('profileContainer');
 
 container.innerHTML = `
   ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
+
+  <div class="profile-item"><strong>Gamertag:</strong> ${profile.gamertag || userData.username}</div>
+  <div class="profile-item"><strong>Age:</strong> ${profile.age || '-'}</div>
+  <div class="profile-item"><strong>Bio:</strong><br>${profile.bio || '-'}</div>
+
+  <hr style="margin:20px 0; border-color:#ffffff20;">
+
   <div class="profile-item"><strong>Discord:</strong> ${profile.discord || '-'}</div>
-  <div class="profile-item"><strong>YouTube:</strong> ${profile.youtube ? `<a href="${profile.youtube}" target="_blank">${profile.youtube}</a>` : '-'}</div>
-  <div class="profile-item"><strong>Twitch:</strong> ${profile.twitch ? `<a href="${profile.twitch}" target="_blank">${profile.twitch}</a>` : '-'}</div>
-  <div class="profile-item"><strong>X (Twitter):</strong> ${profile.x ? `<a href="${profile.x}" target="_blank">${profile.x}</a>` : '-'}</div>
-  <div class="profile-item"><strong>Instagram:</strong> ${profile.instagram ? `<a href="${profile.instagram}" target="_blank">${profile.instagram}</a>` : '-'}</div>
-  <div class="profile-item"><strong>TikTok:</strong> ${profile.tiktok ? `<a href="${profile.tiktok}" target="_blank">${profile.tiktok}</a>` : '-'}</div>
-  <div class="profile-item"><a href="profile-edit.html" style="color:#00ff9d;">Edit Profile</a></div>
+
+  <div class="socials">
+    ${profile.youtube ? `<a href="${profile.youtube}" target="_blank">YouTube</a>` : ''}
+    ${profile.twitch ? `<a href="${profile.twitch}" target="_blank">Twitch</a>` : ''}
+    ${profile.x ? `<a href="${profile.x}" target="_blank">X (Twitter)</a>` : ''}
+    ${profile.instagram ? `<a href="${profile.instagram}" target="_blank">Instagram</a>` : ''}
+    ${profile.tiktok ? `<a href="${profile.tiktok}" target="_blank">TikTok</a>` : ''}
+  </div>
+
+  <div class="profile-item" style="margin-top:25px;">
+    <a href="profile-edit.html" style="color:#00ff9d;">Edit Profile</a>
+  </div>
 `;
 </script>
 
