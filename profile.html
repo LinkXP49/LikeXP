@@ -3,170 +3,69 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edit Profile – LinkXP</title>
+<title>LinkXP Profile</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Roboto', sans-serif;
   background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
   color: #e0e0ff;
   min-height: 100vh;
+  padding: 40px 20px;
 }
+header { text-align:center; margin-bottom: 40px; }
+header h1 { font-family:'Orbitron', sans-serif; font-size:2.8rem; color:#00f0ff;
+           text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:10px; }
+header p { font-size:1.2rem; color:#d0d0ff; }
 
-header {
-  text-align: center;
-  padding: 80px 20px 40px;
-}
-
-header h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 2.8rem;
-  color: #00f0ff;
-  text-shadow: 0 0 20px #00f0ff, 0 0 40px #ff00aa;
-  margin-bottom: 10px;
-}
-
-header p {
-  font-size: 1.2rem;
-  color: #d0d0ff;
-  margin-bottom: 30px;
-}
-
-.form-container {
+.profile-container {
   background: rgba(20,15,50,0.85);
   padding: 40px 30px;
   border-radius: 20px;
   box-shadow: 0 0 50px #00f0ff60;
   max-width: 500px;
-  margin: 0 auto 60px;
+  margin: 0 auto;
 }
 
-label {
-  display: block;
-  margin-top: 12px;
-  font-weight: 500;
-  color: #00ff9d;
-}
+.profile-item { margin-bottom: 15px; }
+.profile-item img { max-width:150px; border-radius:50%; display:block; margin-bottom:15px; }
 
-input, button {
-  width: 100%;
-  padding: 14px 16px;
-  margin-top: 6px;
-  border-radius: 12px;
-  border: none;
-  font-size: 1rem;
-  background: rgba(255,255,255,0.08);
-  color: #ffffff;
-}
-
-input::placeholder { color: #d0d0ff; }
-
-button {
-  margin-top: 18px;
-  background: #00ff9d;
-  color: #0a0a1f;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 0 25px #00ff9d80;
-  border-radius: 50px;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 40px #00ff9d;
-}
-
-.alert {
-  display: none;
-  background: #ff00aa30;
-  color: #ff00aa;
-  padding: 12px;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  text-align: center;
-  font-weight: bold;
-}
+.socials a { display:block; color:#00ff9d; text-decoration:none; margin-bottom:5px; word-break: break-all; }
+.socials a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Edit Your Profile</h1>
-  <p>Add optional social links and an avatar.</p>
+  <h1>Your LinkXP Profile</h1>
+  <p>View your profile information below.</p>
 </header>
 
-<div class="form-container">
-  <div class="alert" id="alert"></div>
-  <form id="profile-form">
-    <label for="discord">Discord</label>
-    <input type="text" id="discord" placeholder="Discord username#1234">
-
-    <label for="youtube">YouTube URL</label>
-    <input type="url" id="youtube" placeholder="https://youtube.com/...">
-
-    <label for="twitch">Twitch URL</label>
-    <input type="url" id="twitch" placeholder="https://twitch.tv/...">
-
-    <label for="x">X (Twitter) URL</label>
-    <input type="url" id="x" placeholder="https://twitter.com/...">
-
-    <label for="instagram">Instagram URL</label>
-    <input type="url" id="instagram" placeholder="https://instagram.com/...">
-
-    <label for="tiktok">TikTok URL</label>
-    <input type="url" id="tiktok" placeholder="https://tiktok.com/...">
-
-    <label for="avatar">Avatar URL</label>
-    <input type="url" id="avatar" placeholder="Optional avatar URL">
-
-    <button type="submit">Save Profile</button>
-  </form>
+<div class="profile-container" id="profileContainer">
 </div>
 
 <script>
-const alertBox = document.getElementById('alert');
-function showAlert(msg){
-  alertBox.textContent = msg;
-  alertBox.style.display = 'block';
-  setTimeout(()=>{ alertBox.style.display='none'; }, 3000);
-}
-
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-if(!currentUser){
-  showAlert('No user logged in. Redirecting...');
-  setTimeout(()=>window.location.href='setup.html',1000);
+const users = JSON.parse(localStorage.getItem('users') || '{}');
+
+if(!currentUser || !users[currentUser.email]){
+  alert('No user logged in. Redirecting...');
+  window.location.href='setup.html';
 }
 
-const users = JSON.parse(localStorage.getItem('users')||'{}');
-const profile = (users[currentUser?.email]?.profile) || {};
+const profile = users[currentUser.email].profile || {};
+const container = document.getElementById('profileContainer');
 
-// Populate existing data
-document.getElementById('discord').value = profile.discord || '';
-document.getElementById('youtube').value = profile.youtube || '';
-document.getElementById('twitch').value = profile.twitch || '';
-document.getElementById('x').value = profile.x || '';
-document.getElementById('instagram').value = profile.instagram || '';
-document.getElementById('tiktok').value = profile.tiktok || '';
-document.getElementById('avatar').value = profile.avatar || '';
-
-// Handle form submit
-document.getElementById('profile-form').addEventListener('submit', e=>{
-  e.preventDefault();
-  const discord = document.getElementById('discord').value.trim();
-  const youtube = document.getElementById('youtube').value.trim();
-  const twitch = document.getElementById('twitch').value.trim();
-  const x = document.getElementById('x').value.trim();
-  const instagram = document.getElementById('instagram').value.trim();
-  const tiktok = document.getElementById('tiktok').value.trim();
-  const avatar = document.getElementById('avatar').value.trim();
-
-  users[currentUser.email].profile = { discord, youtube, twitch, x, instagram, tiktok, avatar };
-  localStorage.setItem('users', JSON.stringify(users));
-  showAlert('Profile updated!');
-  setTimeout(()=>window.location.href='profile.html?u='+currentUser.username,1000);
-});
+container.innerHTML = `
+  ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
+  <div class="profile-item"><strong>Discord:</strong> ${profile.discord || '-'}</div>
+  <div class="profile-item"><strong>YouTube:</strong> ${profile.youtube ? `<a href="${profile.youtube}" target="_blank">${profile.youtube}</a>` : '-'}</div>
+  <div class="profile-item"><strong>Twitch:</strong> ${profile.twitch ? `<a href="${profile.twitch}" target="_blank">${profile.twitch}</a>` : '-'}</div>
+  <div class="profile-item"><strong>X (Twitter):</strong> ${profile.x ? `<a href="${profile.x}" target="_blank">${profile.x}</a>` : '-'}</div>
+  <div class="profile-item"><strong>Instagram:</strong> ${profile.instagram ? `<a href="${profile.instagram}" target="_blank">${profile.instagram}</a>` : '-'}</div>
+  <div class="profile-item"><strong>TikTok:</strong> ${profile.tiktok ? `<a href="${profile.tiktok}" target="_blank">${profile.tiktok}</a>` : '-'}</div>
+  <div class="profile-item"><a href="profile-edit.html" style="color:#00ff9d;">Edit Profile</a></div>
+`;
 </script>
 
 </body>
