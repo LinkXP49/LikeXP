@@ -3,61 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Create Profile - LinkXP </title>
-  
+  <title>Create Profile – LinkXP</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  
+
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Roboto', sans-serif;
       background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
       color: #e0e0ff;
       min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Navigation */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(15, 12, 41, 0.85);
-      backdrop-filter: blur(10px);
-      padding: 15px 5%;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      z-index: 1000;
     }
-    .logo {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.8rem;
-      color: #00f0ff;
-      text-shadow: 0 0 15px #00f0ff;
-    }
-    .nav-links a {
-      color: #d0d0ff;
-      margin: 0 18px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-      cursor: pointer;
-    }
-    .nav-links a:hover { color: #00f0ff; }
-    .auth-btns button {
-      padding: 8px 20px;
-      margin-left: 12px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .login { background: transparent; border: 2px solid #00f0ff; color: #00f0ff; }
-    .signup { background: #00ff9d; color: #0a0a1f; }
-    .login:hover { background: rgba(0,240,255,0.15); }
-    .signup:hover { transform: scale(1.05); box-shadow: 0 0 20px #00ff9d; }
 
-    /* Profile Container */
     .profile-container {
       background: rgba(20,15,50,0.85);
       padding: 50px 40px;
@@ -66,14 +32,15 @@
       width: 400px;
       max-width: 90%;
       text-align: center;
-      margin: 120px auto 60px;
     }
-    .profile-container h1 {
+
+    h1 {
       font-family: 'Orbitron', sans-serif;
       color: #00f0ff;
       text-shadow: 0 0 30px #00f0ff, 0 0 60px #ff00aa;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
+
     input {
       width: 100%;
       padding: 14px 16px;
@@ -84,7 +51,11 @@
       background: rgba(255,255,255,0.08);
       color: #ffffff;
     }
-    input::placeholder { color: #d0d0ff; }
+
+    input::placeholder {
+      color: #d0d0ff;
+    }
+
     input:focus {
       outline: none;
       box-shadow: 0 0 15px #00f0ff;
@@ -94,7 +65,7 @@
     button {
       width: 100%;
       padding: 14px 0;
-      margin-top: 16px;
+      margin-top: 18px;
       border-radius: 50px;
       border: none;
       background: #00ff9d;
@@ -105,6 +76,7 @@
       transition: all 0.3s;
       box-shadow: 0 0 25px #00ff9d80;
     }
+
     button:hover {
       transform: translateY(-2px);
       box-shadow: 0 0 40px #00ff9d;
@@ -114,71 +86,75 @@
       background: transparent;
       border: 2px solid #00f0ff;
       color: #00f0ff;
-      margin-top: 10px;
+      margin-top: 12px;
     }
-    .secondary-btn:hover { background: rgba(0,240,255,0.15); }
+
+    .secondary-btn:hover {
+      background: rgba(0,240,255,0.15);
+    }
 
     .welcome-msg {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       font-size: 1.1rem;
       color: #00ff9d;
-    }
-
-    @media (max-width: 768px) { 
-      .profile-container { margin: 140px 20px 60px; }
+      display: none;
     }
   </style>
 </head>
 <body>
 
-
   <div class="profile-container">
-    <h1>Create Your Profile</h1>
-    <div id="welcome" class="welcome-msg" style="display:none;"></div>
+    <h1>Create Profile</h1>
+    <div id="welcome" class="welcome-msg"></div>
 
     <div id="profile-form">
-      <input type="text" id="username" placeholder="Username">
-      <input type="email" id="email" placeholder="Email">
-      <input type="password" id="password" placeholder="Password">
-      <button onclick="saveProfile()">Save Profile</button>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="email" id="email" placeholder="Email" />
+      <input type="password" id="password" placeholder="Password" />
+
+      <button onclick="saveProfile()">Create Account</button>
       <button class="secondary-btn" onclick="goHome()">Back to Home</button>
     </div>
   </div>
 
   <script>
-    function goHome() { window.location.href = '/'; }
-
-    window.onload = function() {
-      const user = localStorage.getItem('loggedInUser');
-      const profile = localStorage.getItem('userProfile');
-      if(user && profile) {
-        document.getElementById('profile-form').style.display = 'none';
-        const welcome = document.getElementById('welcome');
-        welcome.style.display = 'block';
-        welcome.textContent = 'Welcome back, ' + user + '! Your profile is already created.';
-      } else if(user) {
-        document.getElementById('welcome').style.display = 'block';
-        document.getElementById('welcome').textContent = 'Welcome, ' + user + '! Create your profile below.';
-      } else {
-        document.getElementById('welcome').textContent = 'Create your profile and join the LinkXP community!';
-      }
+    function goHome() {
+      window.location.href = "/";
     }
 
-    function saveProfile() {
-      const username = document.getElementById('username').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
+    window.onload = function () {
+      const user = localStorage.getItem("loggedInUser");
+      const profile = localStorage.getItem("userProfile");
 
-      if(!username || !email || !password) {
-        alert('All fields are required.');
+      if (user && profile) {
+        document.getElementById("profile-form").style.display = "none";
+        const welcome = document.getElementById("welcome");
+        welcome.style.display = "block";
+        welcome.textContent =
+          "Welcome back, " + user + "! Your account already exists.";
+      }
+    };
+
+    function saveProfile() {
+      const username = document.getElementById("username").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      if (!username || !email || !password) {
+        alert("All fields are required.");
         return;
       }
 
-      const profile = { username, email, password };
-      localStorage.setItem('userProfile', JSON.stringify(profile));
-      localStorage.setItem('loggedInUser', username);
+      const profile = {
+        username,
+        email,
+        password // prototype only – do NOT do this in production
+      };
 
-      alert('Profile saved successfully!');
+      localStorage.setItem("userProfile", JSON.stringify(profile));
+      localStorage.setItem("loggedInUser", username);
+
+      alert("Account created successfully!");
       goHome();
     }
   </script>
