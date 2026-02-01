@@ -1,104 +1,153 @@
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
-<form id="completeForm">
-  <input type="file" id="avatar" accept="image/*" />
-<script>
-document.getElementById('avatar').onchange = (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  const img = document.getElementById('avatarPreview');
-  img.src = URL.createObjectURL(file);
-  img.style.display = 'block';
-};
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Complete Profile - LinkXP</title>
+  <style>
+    #avatarPreview { display: none; max-width: 150px; margin-top: 10px; }
+    form { display: flex; flex-direction: column; max-width: 400px; }
+    input, textarea, select, button { margin: 5px 0; padding: 8px; font-size: 1em; }
+    #completion { margin: 10px 0; font-weight: bold; }
+  </style>
+</head>
+<body>
   <h2>Complete Your Profile</h2>
+  <div id="completion">Profile Completion: 0%</div>
 
-<div id="completion"></div>
+  <form id="completeForm">
+    <label>Profile Picture</label>
+    <input type="file" id="avatar" accept="image/*" />
+    <img id="avatarPreview" alt="Avatar Preview" />
 
-<form id="completeForm">
+    <label>Bio</label>
+    <textarea id="bio" placeholder="Tell people who you are as a gamer"></textarea>
 
-  <label>Profile Picture</label>
-  <input type="file" id="avatar" accept="image/*" />
+    <label>Birthday</label>
+    <input type="date" id="birthday" />
 
-  <label>Bio</label>
-  <textarea id="bio" placeholder="Tell people who you are as a gamer"></textarea>
+    <label>Gender</label>
+    <select id="gender">
+      <option value="">Prefer not to say</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
 
-  <label>Birthday</label>
-  <input type="date" id="birthday" />
+    <h3>Socials</h3>
+    <input id="discord" placeholder="Discord username" />
+    <input id="twitch" placeholder="Twitch URL" />
+    <input id="youtube" placeholder="YouTube URL" />
+    <input id="twitter" placeholder="X (Twitter) URL" />
+    <input id="instagram" placeholder="Instagram URL" />
 
-  <label>Gender</label>
-  <select id="gender">
-    <option value="">Prefer not to say</option>
-    <option value="male">Male</option>
-    <option value="female">Female</option>
-    <option value="other">Other</option>
-  </select>
+    <button type="submit">Save & View Profile</button>
+  </form>
 
-  <h3>Socials</h3>
-  <input id="discord" placeholder="Discord username" />
-  <input id="twitch" placeholder="Twitch URL" />
-  <input id="youtube" placeholder="YouTube URL" />
-  <input id="twitter" placeholder="X (Twitter) URL" />
-  <input id="instagram" placeholder="Instagram URL" />
-
-  <button type="submit">Save & View Profile</button>
-</form>
   <script>
-document.getElementById('completeForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+    // Load existing profile from localStorage
+    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
 
-  // Ensure user is logged in
- <script>
-document.getElementById('completeForm').onsubmit = async (e) => {
-  e.preventDefault();
+    const avatarInput = document.getElementById('avatar');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const bioInput = document.getElementById('bio');
+    const birthdayInput = document.getElementById('birthday');
+    const genderInput = document.getElementById('gender');
+    const discordInput = document.getElementById('discord');
+    const twitchInput = document.getElementById('twitch');
+    const youtubeInput = document.getElementById('youtube');
+    const twitterInput = document.getElementById('twitter');
+    const instagramInput = document.getElementById('instagram');
+    const completionDiv = document.getElementById('completion');
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return location.href = 'login.html';
-
-  let avatarUrl = null;
-
-  if (avatar.files.length) {
-    const filePath = `${user.id}.jpg`;
-    await supabase.storage.from('avatars')
-      .upload(filePath, avatar.files[0], { upsert: true });
-
-    avatarUrl = supabase.storage
-      .from('avatars')
-      .getPublicUrl(filePath).data.publicUrl;
-  }
-
-  await supabase.from('profiles').update({
-    bio: bio.value,
-    birthday: birthday.value,
-    gender: gender.value,
-    avatar_url: avatarUrl,
-    socials: {
-      discord: discord.value,
-      twitch: twitch.value,
-      youtube: youtube.value,
-      twitter: twitter.value,
-      instagram: instagram.value
+    // Populate form with saved data
+    if (profile.avatarDataUrl) {
+      avatarPreview.src = profile.avatarDataUrl;
+      avatarPreview.style.display = 'block';
     }
-  }).eq('user_id', user.id);
+    bioInput.value = profile.bio || '';
+    birthdayInput.value = profile.birthday || '';
+    genderInput.value = profile.gender || '';
+    discordInput.value = profile.socials?.discord || '';
+    twitchInput.value = profile.socials?.twitch || '';
+    youtubeInput.value = profile.socials?.youtube || '';
+    twitterInput.value = profile.socials?.twitter || '';
+    instagramInput.value = profile.socials?.instagram || '';
 
-  window.location.href = 'profile.html?u=' + user.user_metadata.username;
-};
-<script>
-completion.innerText = `Profile Completion: ${calcCompletion(profile)}%`;
-function calcCompletion(data) {
-  let total = 8;
-  let filled = 0;
+    // Avatar preview
+    avatarInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-  if (data.avatar_url) filled++;
-  if (data.bio) filled++;
-  if (data.birthday) filled++;
-  if (data.gender) filled++;
-  if (data.socials?.discord) filled++;
-  if (data.socials?.twitch) filled++;
-  if (data.socials?.youtube) filled++;
-  if (data.socials?.instagram) filled++;
+      const reader = new FileReader();
+      reader.onload = () => {
+        avatarPreview.src = reader.result;
+        avatarPreview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    });
 
-  return Math.round((filled / total) * 100);
-}
-</script>
+    // Calculate completion
+    function calcCompletion(data) {
+      let total = 8;
+      let filled = 0;
+      if (data.avatarDataUrl) filled++;
+      if (data.bio) filled++;
+      if (data.birthday) filled++;
+      if (data.gender) filled++;
+      if (data.socials?.discord) filled++;
+      if (data.socials?.twitch) filled++;
+      if (data.socials?.youtube) filled++;
+      if (data.socials?.instagram) filled++;
+      return Math.round((filled / total) * 100);
+    }
+
+    function updateCompletion() {
+      const tempProfile = {
+        avatarDataUrl: avatarPreview.src || null,
+        bio: bioInput.value.trim(),
+        birthday: birthdayInput.value,
+        gender: genderInput.value,
+        socials: {
+          discord: discordInput.value.trim(),
+          twitch: twitchInput.value.trim(),
+          youtube: youtubeInput.value.trim(),
+          twitter: twitterInput.value.trim(),
+          instagram: instagramInput.value.trim()
+        }
+      };
+      completionDiv.innerText = `Profile Completion: ${calcCompletion(tempProfile)}%`;
+    }
+
+    // Update completion live
+    [avatarInput, bioInput, birthdayInput, genderInput, discordInput, twitchInput, youtubeInput, twitterInput, instagramInput]
+      .forEach(el => el.addEventListener('input', updateCompletion));
+
+    updateCompletion();
+
+    // Form submit
+    document.getElementById('completeForm').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const savedProfile = {
+        avatarDataUrl: avatarPreview.src || null,
+        bio: bioInput.value.trim(),
+        birthday: birthdayInput.value,
+        gender: genderInput.value,
+        socials: {
+          discord: discordInput.value.trim(),
+          twitch: twitchInput.value.trim(),
+          youtube: youtubeInput.value.trim(),
+          twitter: twitterInput.value.trim(),
+          instagram: instagramInput.value.trim()
+        }
+      };
+
+      localStorage.setItem('profile', JSON.stringify(savedProfile));
+      alert('Profile saved!');
+      // Redirect to profile page if you want
+      // window.location.href = 'profile.html';
+    });
+  </script>
+</body>
+</html>
