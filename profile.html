@@ -41,17 +41,36 @@ header p { font-size:1.2rem; color:#d0d0ff; }
   <p>View your profile information below.</p>
 </header>
 
-<div class="profile-container" id="profileContainer">
-</div>
+<div class="profile-container" id="profileContainer"></div>
 
 <script>
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-const users = JSON.parse(localStorage.getItem('users') || '{}');
+// ===== DEV MODE (replaces login redirect) =====
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+let users = JSON.parse(localStorage.getItem('users') || '{}');
 
-if(!currentUser || !users[currentUser.email]){
-  alert('No user logged in. Redirecting...');
-  window.location.href='setup.html';
+if (!currentUser || !users[currentUser.email]) {
+  currentUser = {
+    email: "dev@linkxp.local",
+    username: "DevUser"
+  };
+
+  users[currentUser.email] = {
+    username: "DevUser",
+    profile: {
+      avatar: "",
+      discord: "DevUser#0001",
+      youtube: "",
+      twitch: "",
+      x: "",
+      instagram: "",
+      tiktok: ""
+    }
+  };
+
+  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+  localStorage.setItem('users', JSON.stringify(users));
 }
+// ===== END DEV MODE =====
 
 const profile = users[currentUser.email].profile || {};
 const container = document.getElementById('profileContainer');
