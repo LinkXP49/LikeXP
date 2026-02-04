@@ -7,121 +7,113 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
-    color: #e0e0ff;
-    min-height: 100vh;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  header { text-align:center; margin-bottom: 30px; }
-  header h1 { font-family:'Orbitron', sans-serif; font-size:2.5rem; color:#00f0ff; text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:5px; }
-  header p { font-size:1.1rem; color:#d0d0ff; }
-
-  .form-container {
-    background: rgba(20,15,50,0.85);
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 50px #00f0ff60;
-    width: 450px;
-    max-width: 95%;
-    text-align: center;
-  }
-
-  .avatar-hex {
-    width: 140px;
-    height: 140px;
-    margin: 0 auto 20px;
-    background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,0,170,0.12));
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-    border: 3px solid rgba(0,240,255,0.5);
-    box-shadow: 0 0 35px rgba(0,240,255,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    color: rgba(0,240,255,0.7);
-    overflow: hidden;
-  }
-  .avatar-hex img { width: 120px; height: 120px; border-radius:50%; }
-
-  .form-container label {
-    display:block;
-    margin-top:12px;
-    margin-bottom:4px;
-    font-weight:bold;
-    color:#00ff9d;
-  }
-
-  .form-container input, .form-container textarea {
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:none;
-    background: rgba(255,255,255,0.08);
-    color:#fff;
-  }
-
-  .form-container textarea { resize:vertical; min-height:60px; }
-
-  button {
-    width:100%;
-    padding:14px 0;
-    margin-top:20px;
-    border:none;
-    border-radius:50px;
-    background:#00ff9d;
-    color:#0a0a1f;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 0 25px #00ff9d80;
-    transition: all 0.3s;
-  }
-  button:hover { transform:translateY(-2px); box-shadow:0 0 40px #00ff9d; }
-
-  .alert {
-    display:none;
-    padding:10px;
-    background:#00f0ff20;
-    color:#00ff9d;
-    margin-bottom:10px;
-    text-align:center;
-    border-radius:10px;
-  }
-
-  /* Social icons preview */
-  .socials-preview {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 15px;
-  }
-  .socials-preview i {
-    font-size:1.6rem;
-    color:#00ff9d;
-    transition: transform 0.2s;
-  }
-  .socials-preview i:hover { transform: scale(1.2); }
+body {
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+  color: #e0e0ff;
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+header { text-align:center; margin-bottom: 30px; }
+header h1 { font-family:'Orbitron', sans-serif; font-size:2.5rem; color:#00f0ff; text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:5px; }
+header p { font-size:1.1rem; color:#d0d0ff; }
+.form-container {
+  background: rgba(20,15,50,0.85);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 0 50px #00f0ff60;
+  width: 450px;
+  max-width: 95%;
+  text-align: center;
+}
+.avatar-hex {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,0,170,0.12));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  border: 3px solid rgba(0,240,255,0.5);
+  box-shadow: 0 0 35px rgba(0,240,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: rgba(0,240,255,0.7);
+  overflow: hidden;
+  cursor: pointer;
+}
+.avatar-hex img { width: 120px; height: 120px; border-radius:50%; }
+.form-container label {
+  display:block;
+  margin-top:12px;
+  margin-bottom:4px;
+  font-weight:bold;
+  color:#00ff9d;
+}
+.form-container input, .form-container textarea {
+  width:100%;
+  padding:12px 14px;
+  border-radius:10px;
+  border:none;
+  background: rgba(255,255,255,0.08);
+  color:#fff;
+}
+.form-container textarea { resize:vertical; min-height:60px; }
+button {
+  width:100%;
+  padding:14px 0;
+  margin-top:20px;
+  border:none;
+  border-radius:50px;
+  background:#00ff9d;
+  color:#0a0a1f;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 0 25px #00ff9d80;
+  transition: all 0.3s;
+}
+button:hover { transform:translateY(-2px); box-shadow:0 0 40px #00ff9d; }
+.alert {
+  display:none;
+  padding:10px;
+  background:#00f0ff20;
+  color:#00ff9d;
+  margin-bottom:10px;
+  text-align:center;
+  border-radius:10px;
+}
+.socials-preview {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+}
+.socials-preview i {
+  font-size:1.6rem;
+  color:#00ff9d;
+  transition: transform 0.2s;
+}
+.socials-preview i:hover { transform: scale(1.2); }
 </style>
 </head>
 <body>
 
 <header>
   <h1>Edit Your Profile</h1>
-  <p>Add your Gamer Info, socials, and avatar.</p>
+  <p>Click the avatar to change it, or use a URL.</p>
 </header>
 
 <div class="form-container">
   <div class="alert" id="alert"></div>
 
   <!-- HEX AVATAR PREVIEW -->
-  <div class="avatar-hex" id="avatarPreview">
+  <div class="avatar-hex" id="avatarPreview" title="Click to change avatar">
     <i class="fas fa-user-astronaut"></i>
   </div>
+  <input type="file" id="avatarFile" accept="image/*" style="display:none;">
 
   <form id="profile-form">
     <label for="username">Username</label>
@@ -138,9 +130,6 @@
 
     <label for="avatar">Avatar URL</label>
     <input type="url" id="avatar" placeholder="Optional avatar URL">
-
-    <label for="avatarFile">Upload Avatar</label>
-    <input type="file" id="avatarFile" accept="image/*">
 
     <label for="discord">Discord</label>
     <input type="text" id="discord" placeholder="Discord username#1234">
@@ -163,7 +152,6 @@
     <button type="submit">Save Profile</button>
   </form>
 
-  <!-- Social icons preview -->
   <div class="socials-preview" id="socialPreview"></div>
 </div>
 
@@ -184,12 +172,16 @@ if(!currentUser){
 const users = JSON.parse(localStorage.getItem('users')||'{}');
 const profile = users[currentUser.email]?.profile || {};
 
+const avatarFile = document.getElementById('avatarFile');
+const avatarPreview = document.getElementById('avatarPreview');
+const avatarURLInput = document.getElementById('avatar');
+
 // Populate existing data
 document.getElementById('username').value = profile.username || currentUser.username;
 document.getElementById('gamertag').value = profile.gamertag || '';
 document.getElementById('age').value = profile.age || '';
 document.getElementById('bio').value = profile.bio || '';
-document.getElementById('avatar').value = profile.avatar || '';
+avatarURLInput.value = profile.avatar || '';
 document.getElementById('discord').value = profile.discord || '';
 document.getElementById('youtube').value = profile.youtube || '';
 document.getElementById('twitch').value = profile.twitch || '';
@@ -197,57 +189,53 @@ document.getElementById('x').value = profile.x || '';
 document.getElementById('instagram').value = profile.instagram || '';
 document.getElementById('tiktok').value = profile.tiktok || '';
 
-// Avatar and social preview
-const avatarFile = document.getElementById('avatarFile');
-function updateAvatarPreview() {
-  const url = document.getElementById('avatar').value.trim();
-  const preview = document.getElementById('avatarPreview');
-  if(url){
-    preview.innerHTML = `<img src="${url}" alt="Avatar">`;
-  } else if(avatarFile.files && avatarFile.files[0]){
+// Click avatar to choose file
+avatarPreview.addEventListener('click', ()=> avatarFile.click());
+
+// Update avatar preview
+function updateAvatarPreview(){
+  const url = avatarURLInput.value.trim();
+  if(avatarFile.files && avatarFile.files[0]){
     const reader = new FileReader();
-    reader.onload = function(e){ preview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`; }
+    reader.onload = e => avatarPreview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
     reader.readAsDataURL(avatarFile.files[0]);
+  } else if(url){
+    avatarPreview.innerHTML = `<img src="${url}" alt="Avatar">`;
   } else {
-    preview.innerHTML = `<i class="fas fa-user-astronaut"></i>`;
+    avatarPreview.innerHTML = `<i class="fas fa-user-astronaut"></i>`;
   }
 }
-function updateSocialPreview() {
+
+// Update social preview
+function updateSocialPreview(){
   const preview = document.getElementById('socialPreview');
   const socials = ['discord','youtube','twitch','x','instagram','tiktok'];
-  const icons = { discord:'fab fa-discord', youtube:'fab fa-youtube', twitch:'fab fa-twitch', x:'fab fa-x-twitter', instagram:'fab fa-instagram', tiktok:'fab fa-tiktok' };
-  let html = '';
-  socials.forEach(s => { const val = document.getElementById(s).value.trim(); if(val) html += `<i class="${icons[s]}" title="${s.charAt(0).toUpperCase()+s.slice(1)}"></i>`; });
+  const icons = {discord:'fab fa-discord',youtube:'fab fa-youtube',twitch:'fab fa-twitch',x:'fab fa-x-twitter',instagram:'fab fa-instagram',tiktok:'fab fa-tiktok'};
+  let html='';
+  socials.forEach(s=>{ const val=document.getElementById(s).value.trim(); if(val) html+=`<i class="${icons[s]}" title="${s.charAt(0).toUpperCase()+s.slice(1)}"></i>`; });
   preview.innerHTML = html;
 }
 
-// Listen for changes
-['avatar','discord','youtube','twitch','x','instagram','tiktok'].forEach(id=>document.getElementById(id).addEventListener('input', ()=>{
-  updateAvatarPreview(); updateSocialPreview();
-}));
+// Event listeners
+['discord','youtube','twitch','x','instagram','tiktok','avatar'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', ()=>{
+    updateAvatarPreview();
+    updateSocialPreview();
+  });
+});
 avatarFile.addEventListener('change', updateAvatarPreview);
 
 // Initialize previews
-updateAvatarPreview(); updateSocialPreview();
+updateAvatarPreview();
+updateSocialPreview();
 
 // Handle form submit
 document.getElementById('profile-form').addEventListener('submit', e=>{
   e.preventDefault();
-
   const username = document.getElementById('username').value.trim();
   const gamertag = document.getElementById('gamertag').value.trim() || null;
   const age = document.getElementById('age').value.trim() || null;
   const bio = document.getElementById('bio').value.trim() || null;
-
-  // If file uploaded, convert to base64, else use URL
-  if(avatarFile.files && avatarFile.files[0]){
-    const reader = new FileReader();
-    reader.onload = function(e){ saveProfile(e.target.result); }
-    reader.readAsDataURL(avatarFile.files[0]);
-  } else {
-    const avatar = document.getElementById('avatar').value.trim() || null;
-    saveProfile(avatar);
-  }
 
   function saveProfile(finalAvatar){
     const discord = document.getElementById('discord').value.trim() || null;
@@ -257,7 +245,7 @@ document.getElementById('profile-form').addEventListener('submit', e=>{
     const instagram = document.getElementById('instagram').value.trim() || null;
     const tiktok = document.getElementById('tiktok').value.trim() || null;
 
-    users[currentUser.email].profile = { username, gamertag, age, bio, avatar: finalAvatar, discord, youtube, twitch, x, instagram, tiktok };
+    users[currentUser.email].profile = {username,gamertag,age,bio,avatar:finalAvatar,discord,youtube,twitch,x,instagram,tiktok};
     localStorage.setItem('users', JSON.stringify(users));
 
     currentUser.username = username;
@@ -265,6 +253,14 @@ document.getElementById('profile-form').addEventListener('submit', e=>{
 
     showAlert('Profile updated!');
     setTimeout(()=>window.location.href='profile.html',1000);
+  }
+
+  if(avatarFile.files && avatarFile.files[0]){
+    const reader = new FileReader();
+    reader.onload = e=>saveProfile(e.target.result);
+    reader.readAsDataURL(avatarFile.files[0]);
+  } else {
+    saveProfile(avatarURLInput.value.trim() || null);
   }
 });
 </script>
