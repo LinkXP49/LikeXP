@@ -43,7 +43,6 @@ header p { font-size:1.1rem; color:#d0d0ff; }
   font-size: 4rem;
   color: rgba(0,240,255,0.7);
   overflow: hidden;
-  cursor: pointer;
 }
 .avatar-hex img { width: 120px; height: 120px; border-radius:50%; }
 .form-container label {
@@ -103,17 +102,16 @@ button:hover { transform:translateY(-2px); box-shadow:0 0 40px #00ff9d; }
 
 <header>
   <h1>Edit Your Profile</h1>
-  <p>Click the avatar to change it, or use a URL.</p>
+  <p>Add your Gamer Info, socials, and avatar.</p>
 </header>
 
 <div class="form-container">
   <div class="alert" id="alert"></div>
 
   <!-- HEX AVATAR PREVIEW -->
-  <div class="avatar-hex" id="avatarPreview" title="Click to change avatar">
+  <div class="avatar-hex" id="avatarPreview">
     <i class="fas fa-user-astronaut"></i>
   </div>
-  <input type="file" id="avatarFile" accept="image/*" style="display:none;">
 
   <form id="profile-form">
     <label for="username">Username</label>
@@ -130,6 +128,9 @@ button:hover { transform:translateY(-2px); box-shadow:0 0 40px #00ff9d; }
 
     <label for="avatar">Avatar URL</label>
     <input type="url" id="avatar" placeholder="Optional avatar URL">
+
+    <label for="avatarFile">Upload Avatar</label>
+    <input type="file" id="avatarFile" accept="image/*">
 
     <label for="discord">Discord</label>
     <input type="text" id="discord" placeholder="Discord username#1234">
@@ -172,41 +173,30 @@ if(!currentUser){
 const users = JSON.parse(localStorage.getItem('users')||'{}');
 const profile = users[currentUser.email]?.profile || {};
 
-const avatarFile = document.getElementById('avatarFile');
-const avatarPreview = document.getElementById('avatarPreview');
-const avatarURLInput = document.getElementById('avatar');
-
-// Populate existing data
 document.getElementById('username').value = profile.username || currentUser.username;
 document.getElementById('gamertag').value = profile.gamertag || '';
 document.getElementById('age').value = profile.age || '';
 document.getElementById('bio').value = profile.bio || '';
-avatarURLInput.value = profile.avatar || '';
+document.getElementById('avatar').value = profile.avatar || '';
 document.getElementById('discord').value = profile.discord || '';
 document.getElementById('youtube').value = profile.youtube || '';
 document.getElementById('twitch').value = profile.twitch || '';
 document.getElementById('x').value = profile.x || '';
 document.getElementById('instagram').value = profile.instagram || '';
 document.getElementById('tiktok').value = profile.tiktok || '';
+const avatarFile = document.getElementById('avatarFile');
 
-// Click avatar to choose file
-avatarPreview.addEventListener('click', ()=> avatarFile.click());
-
-// Update avatar preview
 function updateAvatarPreview(){
-  const url = avatarURLInput.value.trim();
-  if(avatarFile.files && avatarFile.files[0]){
+  const url = document.getElementById('avatar').value.trim();
+  const preview = document.getElementById('avatarPreview');
+  if(url) preview.innerHTML = `<img src="${url}" alt="Avatar">`;
+  else if(avatarFile.files && avatarFile.files[0]){
     const reader = new FileReader();
-    reader.onload = e => avatarPreview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
+    reader.onload = e=>preview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
     reader.readAsDataURL(avatarFile.files[0]);
-  } else if(url){
-    avatarPreview.innerHTML = `<img src="${url}" alt="Avatar">`;
-  } else {
-    avatarPreview.innerHTML = `<i class="fas fa-user-astronaut"></i>`;
-  }
+  } else preview.innerHTML = `<i class="fas fa-user-astronaut"></i>`;
 }
 
-// Update social preview
 function updateSocialPreview(){
   const preview = document.getElementById('socialPreview');
   const socials = ['discord','youtube','twitch','x','instagram','tiktok'];
@@ -216,22 +206,13 @@ function updateSocialPreview(){
   preview.innerHTML = html;
 }
 
-// Event listeners
-['discord','youtube','twitch','x','instagram','tiktok','avatar'].forEach(id=>{
-  document.getElementById(id).addEventListener('input', ()=>{
-    updateAvatarPreview();
-    updateSocialPreview();
-  });
-});
+['avatar','discord','youtube','twitch','x','instagram','tiktok'].forEach(id=>document.getElementById(id).addEventListener('input', ()=>{ updateAvatarPreview(); updateSocialPreview(); }));
 avatarFile.addEventListener('change', updateAvatarPreview);
+updateAvatarPreview(); updateSocialPreview();
 
-// Initialize previews
-updateAvatarPreview();
-updateSocialPreview();
-
-// Handle form submit
 document.getElementById('profile-form').addEventListener('submit', e=>{
   e.preventDefault();
+
   const username = document.getElementById('username').value.trim();
   const gamertag = document.getElementById('gamertag').value.trim() || null;
   const age = document.getElementById('age').value.trim() || null;
@@ -246,10 +227,10 @@ document.getElementById('profile-form').addEventListener('submit', e=>{
     const tiktok = document.getElementById('tiktok').value.trim() || null;
 
     users[currentUser.email].profile = {username,gamertag,age,bio,avatar:finalAvatar,discord,youtube,twitch,x,instagram,tiktok};
-    localStorage.setItem('users', JSON.stringify(users));
+    localStorage.setItem('users',JSON.stringify(users));
 
     currentUser.username = username;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    localStorage.setItem('currentUser',JSON.stringify(currentUser));
 
     showAlert('Profile updated!');
     setTimeout(()=>window.location.href='profile.html',1000);
@@ -260,7 +241,8 @@ document.getElementById('profile-form').addEventListener('submit', e=>{
     reader.onload = e=>saveProfile(e.target.result);
     reader.readAsDataURL(avatarFile.files[0]);
   } else {
-    saveProfile(avatarURLInput.value.trim() || null);
+    const avatar = document.getElementById('avatar').value.trim() || null;
+    saveProfile(avatar);
   }
 });
 </script>
