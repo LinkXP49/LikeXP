@@ -13,11 +13,7 @@ body {
   min-height: 100vh;
   padding: 40px 20px;
 }
-
-header { 
-  text-align:center; 
-  margin-bottom: 40px; 
-}
+header { text-align:center; margin-bottom: 40px; }
 header h1 {
   font-family:'Orbitron', sans-serif;
   font-size:2.8rem;
@@ -25,10 +21,7 @@ header h1 {
   text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa;
   margin-bottom:10px;
 }
-header p { 
-  font-size:1.2rem; 
-  color:#d0d0ff; 
-}
+header p { font-size:1.2rem; color:#d0d0ff; }
 
 .profile-container {
   background: rgba(20,15,50,0.85);
@@ -37,25 +30,14 @@ header p {
   box-shadow: 0 0 50px #00f0ff60;
   max-width: 500px;
   margin: 0 auto;
-  transition: all 0.3s;
-}
-.profile-container:hover {
-  box-shadow: 0 0 70px #ff00aa80, 0 0 50px #00f0ff80;
 }
 
-.profile-item { 
-  margin-bottom: 15px; 
-}
+.profile-item { margin-bottom: 15px; }
 .profile-item img {
   max-width:150px;
   border-radius:50%;
   display:block;
   margin:0 auto 15px;
-  box-shadow: 0 0 15px #00ff9d, 0 0 25px #ff00aa;
-  transition: transform 0.3s;
-}
-.profile-item img:hover {
-  transform: scale(1.05);
 }
 
 .socials {
@@ -76,13 +58,8 @@ header p {
   text-decoration:none;
   font-size:1.2rem;
   transition: all 0.3s;
-  box-shadow: 0 0 5px #00ff9d;
 }
-.socials a:hover { 
-  background: #00ff9d; 
-  color:#0a0a1f; 
-  box-shadow: 0 0 20px #00ff9d, 0 0 30px #ff00aa;
-}
+.socials a:hover { background: #00ff9d; color:#0a0a1f; }
 
 button {
   font-family: 'Roboto', sans-serif;
@@ -90,22 +67,13 @@ button {
   border: none;
   cursor: pointer;
   font-size: 1rem;
+  color: #ff4d4d;
+  margin-top: 10px;
   transition: all 0.3s;
 }
-button:hover {
-  color: #ff4d4d;
-  text-shadow: 0 0 10px #ff4d4d;
-}
-
-/* Responsive for smaller devices */
-@media (max-width: 400px) {
-  .profile-container { padding: 20px 15px; }
-  header h1 { font-size: 2rem; }
-  .profile-item img { max-width: 120px; }
-}
+button:hover { text-shadow: 0 0 10px #ff4d4d; }
 </style>
-
-<!-- FontAwesome for icons -->
+<!-- Add FontAwesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -127,46 +95,42 @@ if (!profile) window.location.href = "profile-edit.html";
 
 const container = document.getElementById("profileContainer");
 
-// Save avatar for homepage usage
+// 🔹 Save avatar reference for homepage usage later
 if (profile.avatar) localStorage.setItem("profileAvatar", profile.avatar);
 
-// URL sanitizer
-function sanitizeURL(url) {
-    if (!url) return "#";
-    return url.startsWith("http") ? url : "https://" + url;
-}
-
-// Build socials row
+// Build socials row with icons
 let socialsHTML = '';
-if(profile.discord) socialsHTML += `<a href="${sanitizeURL(profile.discord)}" title="Discord"><i class="fab fa-discord"></i></a>`;
-if(profile.youtube) socialsHTML += `<a href="${sanitizeURL(profile.youtube)}" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>`;
-if(profile.twitch) socialsHTML += `<a href="${sanitizeURL(profile.twitch)}" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>`;
-if(profile.x) socialsHTML += `<a href="${sanitizeURL(profile.x)}" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>`;
-if(profile.instagram) socialsHTML += `<a href="${sanitizeURL(profile.instagram)}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>`;
-if(profile.tiktok) socialsHTML += `<a href="${sanitizeURL(profile.tiktok)}" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>`;
+if(profile.discord) socialsHTML += `<a href="#" title="Discord"><i class="fab fa-discord"></i></a>`;
+if(profile.youtube) socialsHTML += `<a href="${profile.youtube}" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>`;
+if(profile.twitch) socialsHTML += `<a href="${profile.twitch}" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>`;
+if(profile.x) socialsHTML += `<a href="${profile.x}" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>`;
+if(profile.instagram) socialsHTML += `<a href="${profile.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>`;
+if(profile.tiktok) socialsHTML += `<a href="${profile.tiktok}" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>`;
 
-// Default avatar
-const avatarURL = profile.avatar || 'default-avatar.png';
-
-// Build profile HTML
+// 🔹 Build full profile HTML
 container.innerHTML = `
-  <div class="profile-item"><img src="${avatarURL}" alt="Avatar"></div>
-  <div class="profile-item"><strong>Username:</strong> ${profile.username || 'Anonymous'}</div>
+  ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
+
+  <div class="profile-item"><strong>Username:</strong> ${profile.username || '-'}</div>
   <div class="profile-item"><strong>Gamer Tag:</strong> ${profile.gamertag || '-'}</div>
   <div class="profile-item"><strong>Age:</strong> ${profile.age || '-'}</div>
   <div class="profile-item"><strong>Bio:</strong><br>${profile.bio || '-'}</div>
+
   ${socialsHTML ? `<div class="socials">${socialsHTML}</div>` : ''}
+
   <div class="profile-item" style="margin-top:25px;">
     <a href="profile-edit.html" style="color:#00ff9d;">Edit Profile</a>
   </div>
-  <div class="profile-item" style="margin-top:10px;">
+
+  <div class="profile-item">
     <button onclick="logout()">Logout</button>
   </div>
 `;
 
+// 🔹 Logout function
 function logout() {
-    localStorage.removeItem("loggedInUser");
-    window.location.href = "login.html";
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "login.html";
 }
 </script>
 
