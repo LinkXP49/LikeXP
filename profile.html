@@ -73,8 +73,15 @@ if (!profile) {
 
 const container = document.getElementById("profileContainer");
 
+// 🔹 Save avatar reference for homepage usage later
+if (profile.avatar) {
+  localStorage.setItem("profileAvatar", profile.avatar);
+}
+
 container.innerHTML = `
-  <div class="profile-item"><strong>Username:</strong> ${profile.username}</div>
+  ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
+
+  <div class="profile-item"><strong>Username:</strong> ${profile.username || '-'}</div>
   <div class="profile-item"><strong>Gamer Tag:</strong> ${profile.gamertag || '-'}</div>
   <div class="profile-item"><strong>Age:</strong> ${profile.age || '-'}</div>
   <div class="profile-item"><strong>Bio:</strong><br>${profile.bio || '-'}</div>
