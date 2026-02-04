@@ -123,17 +123,14 @@
     }
 
     window.onload = function () {
-      const user = localStorage.getItem("loggedInUser");
-      const profile = localStorage.getItem("userProfile");
+  const user = localStorage.getItem("loggedInUser");
+  const profile = localStorage.getItem("userProfile");
 
-      if (user && profile) {
-        document.getElementById("profile-form").style.display = "none";
-        const welcome = document.getElementById("welcome");
-        welcome.style.display = "block";
-        welcome.textContent =
-          "Welcome back, " + user + "! Your account already exists.";
-      }
-    };
+  // 🚨 If already logged in, DO NOT stay on this page
+  if (user && profile) {
+    window.location.href = "profile.html";
+  }
+};
 
     function saveProfile() {
       const username = document.getElementById("username").value.trim();
