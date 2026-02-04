@@ -14,8 +14,13 @@ body {
   padding: 40px 20px;
 }
 header { text-align:center; margin-bottom: 40px; }
-header h1 { font-family:'Orbitron', sans-serif; font-size:2.8rem; color:#00f0ff;
-           text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:10px; }
+header h1 {
+  font-family:'Orbitron', sans-serif;
+  font-size:2.8rem;
+  color:#00f0ff;
+  text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa;
+  margin-bottom:10px;
+}
 header p { font-size:1.2rem; color:#d0d0ff; }
 
 .profile-container {
@@ -28,9 +33,19 @@ header p { font-size:1.2rem; color:#d0d0ff; }
 }
 
 .profile-item { margin-bottom: 15px; }
-.profile-item img { max-width:150px; border-radius:50%; display:block; margin:0 auto 15px; }
+.profile-item img {
+  max-width:150px;
+  border-radius:50%;
+  display:block;
+  margin:0 auto 15px;
+}
 
-.socials a { display:block; color:#00ff9d; text-decoration:none; margin-bottom:5px; word-break: break-all; }
+.socials a {
+  display:block;
+  color:#00ff9d;
+  text-decoration:none;
+  margin-bottom:5px;
+}
 .socials a:hover { text-decoration:underline; }
 </style>
 </head>
@@ -44,51 +59,22 @@ header p { font-size:1.2rem; color:#d0d0ff; }
 <div class="profile-container" id="profileContainer"></div>
 
 <script>
-// ===== DEV MODE (replaces login redirect) =====
-let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-let users = JSON.parse(localStorage.getItem('users') || '{}');
+// 🔐 AUTH GUARD
+const loggedInUser = localStorage.getItem("loggedInUser");
+const profile = JSON.parse(localStorage.getItem("userProfile") || "null");
 
-if (!currentUser || !users[currentUser.email]) {
-  currentUser = {
-    email: "dev@linkxp.local",
-    username: "DevUser"
-  };
-
-  users[currentUser.email] = {
-    username: "DevUser",
-    profile: {
-      gamertag: "DevUser",
-      age: "25",
-      bio: "Welcome to my LinkXP profile.",
-      avatar: "",
-      discord: "DevUser#0001",
-      youtube: "",
-      twitch: "",
-      x: "",
-      instagram: "",
-      tiktok: ""
-    }
-  };
-
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
-  localStorage.setItem('users', JSON.stringify(users));
-}
-// ===== END DEV MODE =====
-
-const userData = users[currentUser.email];
-
-// Redirect to createprofile.html if profile is missing
-if (!userData.profile) {
-  window.location.href = "createprofile.html";
+if (!loggedInUser) {
+  window.location.href = "login.html";
 }
 
-const profile = userData.profile;
-const container = document.getElementById('profileContainer');
+if (!profile) {
+  window.location.href = "profile-edit.html";
+}
+
+const container = document.getElementById("profileContainer");
 
 container.innerHTML = `
-  ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
-
-  <div class="profile-item"><strong>Username:</strong> ${userData.username}</div>
+  <div class="profile-item"><strong>Username:</strong> ${profile.username}</div>
   <div class="profile-item"><strong>Gamer Tag:</strong> ${profile.gamertag || '-'}</div>
   <div class="profile-item"><strong>Age:</strong> ${profile.age || '-'}</div>
   <div class="profile-item"><strong>Bio:</strong><br>${profile.bio || '-'}</div>
