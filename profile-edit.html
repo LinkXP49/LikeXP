@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Edit Profile – LinkXP</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <style>
   body {
     font-family: 'Roboto', sans-serif;
@@ -28,7 +29,25 @@
     box-shadow: 0 0 50px #00f0ff60;
     width: 450px;
     max-width: 95%;
+    text-align: center;
   }
+
+  .avatar-hex {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,0,170,0.12));
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    border: 3px solid rgba(0,240,255,0.5);
+    box-shadow: 0 0 35px rgba(0,240,255,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    color: rgba(0,240,255,0.7);
+    overflow: hidden;
+  }
+  .avatar-hex img { width: 120px; height: 120px; border-radius:50%; }
 
   .form-container label {
     display:block;
@@ -73,6 +92,20 @@
     text-align:center;
     border-radius:10px;
   }
+
+  /* Social icons preview */
+  .socials-preview {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+  }
+  .socials-preview i {
+    font-size:1.6rem;
+    color:#00ff9d;
+    transition: transform 0.2s;
+  }
+  .socials-preview i:hover { transform: scale(1.2); }
 </style>
 </head>
 <body>
@@ -84,6 +117,12 @@
 
 <div class="form-container">
   <div class="alert" id="alert"></div>
+
+  <!-- HEX AVATAR PREVIEW -->
+  <div class="avatar-hex" id="avatarPreview">
+    <i class="fas fa-user-astronaut"></i>
+  </div>
+
   <form id="profile-form">
     <label for="username">Username</label>
     <input type="text" id="username" placeholder="Your username">
@@ -120,6 +159,9 @@
 
     <button type="submit">Save Profile</button>
   </form>
+
+  <!-- Social icons preview -->
+  <div class="socials-preview" id="socialPreview"></div>
 </div>
 
 <script>
@@ -151,6 +193,45 @@ document.getElementById('twitch').value = profile.twitch || '';
 document.getElementById('x').value = profile.x || '';
 document.getElementById('instagram').value = profile.instagram || '';
 document.getElementById('tiktok').value = profile.tiktok || '';
+
+// Update avatar preview
+function updateAvatarPreview() {
+  const url = document.getElementById('avatar').value.trim();
+  const preview = document.getElementById('avatarPreview');
+  preview.innerHTML = url ? `<img src="${url}" alt="Avatar">` : `<i class="fas fa-user-astronaut"></i>`;
+}
+
+// Update social preview
+function updateSocialPreview() {
+  const preview = document.getElementById('socialPreview');
+  const socials = ['discord','youtube','twitch','x','instagram','tiktok'];
+  const icons = {
+    discord:'fab fa-discord',
+    youtube:'fab fa-youtube',
+    twitch:'fab fa-twitch',
+    x:'fab fa-x-twitter',
+    instagram:'fab fa-instagram',
+    tiktok:'fab fa-tiktok'
+  };
+  let html = '';
+  socials.forEach(s => {
+    const val = document.getElementById(s).value.trim();
+    if(val) html += `<i class="${icons[s]}" title="${s.charAt(0).toUpperCase()+s.slice(1)}"></i>`;
+  });
+  preview.innerHTML = html;
+}
+
+// Trigger preview updates
+['avatar','discord','youtube','twitch','x','instagram','tiktok'].forEach(id=>{
+  document.getElementById(id).addEventListener('input', ()=>{
+    updateAvatarPreview();
+    updateSocialPreview();
+  });
+});
+
+// Initialize previews
+updateAvatarPreview();
+updateSocialPreview();
 
 // Handle form submit
 document.getElementById('profile-form').addEventListener('submit', e=>{
