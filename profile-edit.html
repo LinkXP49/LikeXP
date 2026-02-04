@@ -67,6 +67,17 @@
     min-height:60px; 
   }
 
+  #avatar-preview {
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    cursor:pointer;
+    display:block;
+    margin-bottom:10px;
+    object-fit:cover;
+    border:2px solid #00ff9d;
+  }
+
   button {
     width:100%;
     padding:14px 0;
@@ -108,6 +119,11 @@
 <div class="form-container">
   <div class="alert" id="alert"></div>
   <form id="profile-form">
+
+    <label for="avatar">Avatar</label>
+    <img id="avatar-preview" src="" alt="Click to change avatar">
+    <input type="file" id="avatar-file" accept="image/*" style="display:none;">
+
     <label for="username">Username</label>
     <input type="text" id="username" placeholder="Your username">
 
@@ -119,9 +135,6 @@
 
     <label for="bio">Bio</label>
     <textarea id="bio" placeholder="Tell us about yourself..."></textarea>
-
-    <label for="avatar">Avatar URL</label>
-    <input type="url" id="avatar" placeholder="Optional avatar URL">
 
     <label for="discord">Discord</label>
     <input type="text" id="discord" placeholder="Discord username#1234">
@@ -150,7 +163,6 @@ const alertBox = document.getElementById('alert');
 function showAlert(msg){
   alertBox.textContent = msg;
   alertBox.style.display = 'block';
-  // click to dismiss
   alertBox.onclick = () => alertBox.style.display = 'none';
 }
 
@@ -164,12 +176,33 @@ if(!currentUser || !currentUser.email){
 const users = JSON.parse(localStorage.getItem('users')||'{}');
 const profile = users[currentUser?.email]?.profile || {};
 
-// Populate existing data
+// Elements
+const avatarPreview = document.getElementById('avatar-preview');
+const avatarFileInput = document.getElementById('avatar-file');
+
+// Show existing avatar or placeholder
+avatarPreview.src = profile.avatar || 'https://via.placeholder.com/100x100.png?text=Avatar';
+
+// Clicking avatar opens file picker
+avatarPreview.addEventListener('click', ()=>avatarFileInput.click());
+
+// When user selects a file
+avatarFileInput.addEventListener('change', function(){
+  const file = this.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = function(e){
+      avatarPreview.src = e.target.result; // preview image
+    }
+    reader.readAsDataURL(file);
+  }
+});
+
+// Populate other existing data
 document.getElementById('username').value = profile.username || currentUser?.username || '';
 document.getElementById('gamertag').value = profile.gamertag || '';
 document.getElementById('age').value = profile.age || '';
 document.getElementById('bio').value = profile.bio || '';
-document.getElementById('avatar').value = profile.avatar || '';
 document.getElementById('discord').value = profile.discord || '';
 document.getElementById('youtube').value = profile.youtube || '';
 document.getElementById('twitch').value = profile.twitch || '';
@@ -193,7 +226,7 @@ document.getElementById('profile-form').addEventListener('submit', e=>{
   const ageValue = document.getElementById('age').value.trim();
   const age = ageValue === '' ? null : Number(ageValue);
   const bio = document.getElementById('bio').value.trim() || null;
-  const avatar = document.getElementById('avatar').value.trim() || null;
+  const avatar = avatarPreview.src || null;
   const discord = document.getElementById('discord').value.trim() || null;
   const youtube = document.getElementById('youtube').value.trim() || null;
   const twitch = document.getElementById('twitch').value.trim() || null;
