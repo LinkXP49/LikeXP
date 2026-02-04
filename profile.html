@@ -30,38 +30,47 @@ header p { font-size:1.2rem; color:#d0d0ff; }
   box-shadow: 0 0 50px #00f0ff60;
   max-width: 500px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.avatar-hex {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,0,170,0.12));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  border: 3px solid rgba(0,240,255,0.5);
+  box-shadow: 0 0 35px rgba(0,240,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: rgba(0,240,255,0.7);
 }
 
 .profile-item { margin-bottom: 15px; }
-.profile-item img {
-  max-width:150px;
-  border-radius:50%;
-  display:block;
-  margin:0 auto 15px;
-}
 
 .socials {
   display: flex;
   justify-content: center;
   gap: 15px;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 .socials a {
   display:flex;
   align-items:center;
   justify-content:center;
-  width:40px;
-  height:40px;
+  width:45px;
+  height:45px;
   border-radius:50%;
   background: rgba(0,255,157,0.2);
   color:#00ff9d;
   text-decoration:none;
-  font-size:1.2rem;
+  font-size:1.4rem;
   transition: all 0.3s;
 }
 .socials a:hover { background: #00ff9d; color:#0a0a1f; }
 </style>
-<!-- Add FontAwesome for icons -->
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -78,20 +87,13 @@ header p { font-size:1.2rem; color:#d0d0ff; }
 const loggedInUser = localStorage.getItem("loggedInUser");
 const profile = JSON.parse(localStorage.getItem("userProfile") || "null");
 
-if (!loggedInUser) {
-  window.location.href = "login.html";
-}
-
-if (!profile) {
-  window.location.href = "profile-edit.html";
-}
+if (!loggedInUser) window.location.href = "login.html";
+if (!profile) window.location.href = "profile-edit.html";
 
 const container = document.getElementById("profileContainer");
 
 // 🔹 Save avatar reference for homepage usage later
-if (profile.avatar) {
-  localStorage.setItem("profileAvatar", profile.avatar);
-}
+if (profile.avatar) localStorage.setItem("profileAvatar", profile.avatar);
 
 // Build socials row with icons
 let socialsHTML = '';
@@ -102,8 +104,11 @@ if(profile.x) socialsHTML += `<a href="${profile.x}" target="_blank" title="X (T
 if(profile.instagram) socialsHTML += `<a href="${profile.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>`;
 if(profile.tiktok) socialsHTML += `<a href="${profile.tiktok}" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>`;
 
+// Build profile HTML with hex avatar & icon socials
 container.innerHTML = `
-  ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
+  <div class="avatar-hex">
+    ${profile.avatar ? `<img src="${profile.avatar}" alt="Avatar" style="width:120px;height:120px;border-radius:50%;">` : `<i class="fas fa-user-astronaut"></i>`}
+  </div>
 
   <div class="profile-item"><strong>Username:</strong> ${profile.username || '-'}</div>
   <div class="profile-item"><strong>Gamer Tag:</strong> ${profile.gamertag || '-'}</div>
