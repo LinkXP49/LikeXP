@@ -6,7 +6,73 @@
 <title>Edit Profile – LinkXP</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <style>
-/* reuse your form styles */
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+    color: #e0e0ff;
+    min-height: 100vh;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  header { text-align:center; margin-bottom: 30px; }
+  header h1 { font-family:'Orbitron', sans-serif; font-size:2.5rem; color:#00f0ff; text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; margin-bottom:5px; }
+  header p { font-size:1.1rem; color:#d0d0ff; }
+
+  .form-container {
+    background: rgba(20,15,50,0.85);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 50px #00f0ff60;
+    width: 450px;
+    max-width: 95%;
+  }
+
+  .form-container label {
+    display:block;
+    margin-top:12px;
+    margin-bottom:4px;
+    font-weight:bold;
+    color:#00ff9d;
+  }
+
+  .form-container input, .form-container textarea {
+    width:100%;
+    padding:12px 14px;
+    border-radius:10px;
+    border:none;
+    background: rgba(255,255,255,0.08);
+    color:#fff;
+  }
+
+  .form-container textarea { resize:vertical; min-height:60px; }
+
+  button {
+    width:100%;
+    padding:14px 0;
+    margin-top:20px;
+    border:none;
+    border-radius:50px;
+    background:#00ff9d;
+    color:#0a0a1f;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 25px #00ff9d80;
+    transition: all 0.3s;
+  }
+  button:hover { transform:translateY(-2px); box-shadow:0 0 40px #00ff9d; }
+
+  .alert {
+    display:none;
+    padding:10px;
+    background:#00f0ff20;
+    color:#00ff9d;
+    margin-bottom:10px;
+    text-align:center;
+    border-radius:10px;
+  }
 </style>
 </head>
 <body>
@@ -55,11 +121,11 @@ function showAlert(msg){
 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 if(!currentUser){
   showAlert('No user logged in. Redirecting...');
-  setTimeout(()=>window.location.href='setup.html',1000);
+  setTimeout(()=>window.location.href='createprofile.html',1000);
 }
 
 const users = JSON.parse(localStorage.getItem('users')||'{}');
-const profile = users[currentUser.email].profile || {};
+const profile = users[currentUser.email]?.profile || {};
 
 // Populate existing data
 document.getElementById('discord').value = profile.discord || '';
@@ -73,18 +139,20 @@ document.getElementById('avatar').value = profile.avatar || '';
 // Handle form submit
 document.getElementById('profile-form').addEventListener('submit', e=>{
   e.preventDefault();
-  const discord = document.getElementById('discord').value.trim();
-  const youtube = document.getElementById('youtube').value.trim();
-  const twitch = document.getElementById('twitch').value.trim();
-  const x = document.getElementById('x').value.trim();
-  const instagram = document.getElementById('instagram').value.trim();
-  const tiktok = document.getElementById('tiktok').value.trim();
-  const avatar = document.getElementById('avatar').value.trim();
+  
+  const discord = document.getElementById('discord').value.trim() || null;
+  const youtube = document.getElementById('youtube').value.trim() || null;
+  const twitch = document.getElementById('twitch').value.trim() || null;
+  const x = document.getElementById('x').value.trim() || null;
+  const instagram = document.getElementById('instagram').value.trim() || null;
+  const tiktok = document.getElementById('tiktok').value.trim() || null;
+  const avatar = document.getElementById('avatar').value.trim() || null;
 
   users[currentUser.email].profile = { discord, youtube, twitch, x, instagram, tiktok, avatar };
   localStorage.setItem('users', JSON.stringify(users));
+
   showAlert('Profile updated!');
-  setTimeout(()=>window.location.href='profile.html?u='+currentUser.username,1000);
+  setTimeout(()=>window.location.href='profile.html',1000);
 });
 </script>
 
