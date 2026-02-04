@@ -40,14 +40,29 @@ header p { font-size:1.2rem; color:#d0d0ff; }
   margin:0 auto 15px;
 }
 
+.socials {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
 .socials a {
-  display:block;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:40px;
+  height:40px;
+  border-radius:50%;
+  background: rgba(0,255,157,0.2);
   color:#00ff9d;
   text-decoration:none;
-  margin-bottom:5px;
+  font-size:1.2rem;
+  transition: all 0.3s;
 }
-.socials a:hover { text-decoration:underline; }
+.socials a:hover { background: #00ff9d; color:#0a0a1f; }
 </style>
+<!-- Add FontAwesome for icons -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -78,6 +93,15 @@ if (profile.avatar) {
   localStorage.setItem("profileAvatar", profile.avatar);
 }
 
+// Build socials row with icons
+let socialsHTML = '';
+if(profile.discord) socialsHTML += `<a href="#" title="Discord"><i class="fab fa-discord"></i></a>`;
+if(profile.youtube) socialsHTML += `<a href="${profile.youtube}" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>`;
+if(profile.twitch) socialsHTML += `<a href="${profile.twitch}" target="_blank" title="Twitch"><i class="fab fa-twitch"></i></a>`;
+if(profile.x) socialsHTML += `<a href="${profile.x}" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>`;
+if(profile.instagram) socialsHTML += `<a href="${profile.instagram}" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>`;
+if(profile.tiktok) socialsHTML += `<a href="${profile.tiktok}" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>`;
+
 container.innerHTML = `
   ${profile.avatar ? `<div class="profile-item"><img src="${profile.avatar}" alt="Avatar"></div>` : ''}
 
@@ -86,17 +110,7 @@ container.innerHTML = `
   <div class="profile-item"><strong>Age:</strong> ${profile.age || '-'}</div>
   <div class="profile-item"><strong>Bio:</strong><br>${profile.bio || '-'}</div>
 
-  <hr style="margin:20px 0; border-color:#ffffff20;">
-
-  <div class="profile-item"><strong>Discord:</strong> ${profile.discord || '-'}</div>
-
-  <div class="socials">
-    ${profile.youtube ? `<a href="${profile.youtube}" target="_blank">YouTube</a>` : ''}
-    ${profile.twitch ? `<a href="${profile.twitch}" target="_blank">Twitch</a>` : ''}
-    ${profile.x ? `<a href="${profile.x}" target="_blank">X (Twitter)</a>` : ''}
-    ${profile.instagram ? `<a href="${profile.instagram}" target="_blank">Instagram</a>` : ''}
-    ${profile.tiktok ? `<a href="${profile.tiktok}" target="_blank">TikTok</a>` : ''}
-  </div>
+  ${socialsHTML ? `<div class="socials">${socialsHTML}</div>` : ''}
 
   <div class="profile-item" style="margin-top:25px;">
     <a href="profile-edit.html" style="color:#00ff9d;">Edit Profile</a>
