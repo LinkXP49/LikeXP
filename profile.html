@@ -72,16 +72,9 @@
     }
 
     .sidebar-submenu {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease;
       padding-left: 40px;
       font-size: 0.95rem;
       color: #c0c0ff;
-    }
-
-    .sidebar-submenu.expanded {
-      max-height: 200px; /* adjust if you add more items */
     }
 
     .sidebar-submenu a,
@@ -207,11 +200,8 @@
       <div class="sidebar-item"><i class="fas fa-envelope"></i> Messages</div>
       <div class="sidebar-item"><i class="fas fa-bell"></i> Notifications</div>
       
-      <div class="sidebar-item" id="settings-toggle">
-        <i class="fas fa-cog"></i> Settings
-        <i class="fas fa-chevron-down" style="margin-left:auto; transition: transform 0.3s;"></i>
-      </div>
-      <div class="sidebar-submenu" id="settings-submenu">
+      <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+      <div class="sidebar-submenu">
         <a href="profile-edit.html">Edit Profile</a>
         <button onclick="logout()">Logout</button>
       </div>
@@ -269,16 +259,6 @@
         </div>
       ` : ''}
     `;
-
-    // Settings toggle
-    const settingsToggle = document.getElementById('settings-toggle');
-    const settingsSubmenu = document.getElementById('settings-submenu');
-    const chevron = settingsToggle.querySelector('.fa-chevron-down');
-
-    settingsToggle.addEventListener('click', () => {
-      settingsSubmenu.classList.toggle('expanded');
-      chevron.style.transform = settingsSubmenu.classList.contains('expanded') ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
 
     // Logout function
     function logout() {
