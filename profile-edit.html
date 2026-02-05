@@ -1,261 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edit Profile – LinkXP</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-<style>
-  body {
-    font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
-    color: #e0e0ff;
-    min-height: 100vh;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile – NEX-LINK-XP</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #1a103f 50%, #000814 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      margin: 0;
+      padding: 30px 20px;
+    }
 
-  header { text-align:center; margin-bottom: 30px; }
-  header h1 { 
-    font-family:'Orbitron', sans-serif; 
-    font-size:2.5rem; 
-    color:#00f0ff; 
-    text-shadow:0 0 20px #00f0ff,0 0 40px #ff00aa; 
-    margin-bottom:5px; 
-  }
-  header p { font-size:1.1rem; color:#d0d0ff; }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(to bottom, transparent 0, rgba(0,0,0,0.04) 1px, transparent 2px);
+      pointer-events: none;
+      opacity: 0.35;
+      z-index: 9999;
+    }
 
-  .form-container {
-    background: rgba(20,15,50,0.85);
-    padding: 40px 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 50px #00f0ff60;
-    width: 450px;
-    max-width: 95%;
-  }
+    .layout {
+      display: flex;
+      max-width: 1400px;
+      margin: 0 auto;
+      gap: 24px;
+    }
 
-  .form-container label {
-    display:block;
-    margin-top:12px;
-    margin-bottom:4px;
-    font-weight:bold;
-    color:#00ff9d;
-  }
+    .sidebar {
+      width: 260px;
+      background: rgba(20,15,50,0.85);
+      border-radius: 20px;
+      padding: 24px 16px;
+      border: 1px solid rgba(0,240,255,0.18);
+      box-shadow: 0 0 50px #00f0ff60;
+      height: fit-content;
+      position: sticky;
+      top: 30px;
+    }
 
-  .form-container input, 
-  .form-container textarea {
-    width:100%;
-    padding:12px 14px;
-    border-radius:10px;
-    border:none;
-    background: rgba(255,255,255,0.08);
-    color:#fff;
-    transition: all 0.2s;
-  }
+    .sidebar-item {
+      padding: 14px 18px;
+      margin: 8px 0;
+      border-radius: 12px;
+      color: #d0d0ff;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: all 0.3s;
+      cursor: pointer;
+      font-size: 1.05rem;
+    }
 
-  .form-container input:focus, 
-  .form-container textarea:focus {
-    outline: none;
-    box-shadow: 0 0 10px #00ff9d;
-    background: rgba(255,255,255,0.12);
-  }
+    .sidebar-item i {
+      width: 24px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
 
-  .form-container textarea { 
-    resize:vertical; 
-    min-height:60px; 
-  }
+    .sidebar-item.active,
+    .sidebar-item:hover {
+      background: rgba(0,255,157,0.18);
+      color: #00ff9d;
+      box-shadow: 0 0 25px rgba(0,255,157,0.35);
+    }
 
-  #avatar-preview {
-    width:100px;
-    height:100px;
-    border-radius:50%;
-    cursor:pointer;
-    display:block;
-    margin-bottom:10px;
-    object-fit:cover;
-    border:2px solid #00ff9d;
-  }
+    .main-content {
+      flex: 1;
+      background: rgba(20,15,50,0.85);
+      border-radius: 20px;
+      padding: 40px;
+      border: 1px solid rgba(0,240,255,0.18);
+      box-shadow: 0 0 50px #00f0ff60;
+    }
 
-  button {
-    width:100%;
-    padding:14px 0;
-    margin-top:20px;
-    border:none;
-    border-radius:50px;
-    background:#00ff9d;
-    color:#0a0a1f;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 0 25px #00ff9d80;
-    transition: all 0.3s;
-  }
-  button:hover { 
-    transform:translateY(-2px); 
-    box-shadow:0 0 40px #00ff9d; 
-    background:#00ff88;
-  }
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.2rem;
+      color: #00f0ff;
+      text-shadow: 0 0 20px #00f0ff, 0 0 40px #ff00aa;
+      text-align: center;
+      margin: 0 0 40px;
+      letter-spacing: 2px;
+    }
 
-  .alert {
-    display:none;
-    padding:10px;
-    background:#00f0ff20;
-    color:#00ff9d;
-    margin-bottom:10px;
-    text-align:center;
-    border-radius:10px;
-    cursor:pointer;
-  }
-</style>
+    .avatar-wrapper {
+      text-align: center;
+      margin: 40px 0 50px;
+    }
+
+    #avatar-preview {
+      width: 180px;
+      height: 180px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(255,0,170,0.1));
+      clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+      border: 4px solid rgba(0,240,255,0.45);
+      box-shadow: 0 0 45px rgba(0,240,255,0.55);
+      display: block;
+      cursor: pointer;
+      object-fit: cover;
+      font-size: 0; /* hide broken icon text */
+    }
+
+    .form-group {
+      margin: 28px 0;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: #00ff9d;
+      font-weight: 600;
+      font-size: 1.1rem;
+      text-shadow: 0 0 8px rgba(0,255,157,0.4);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: #e0e0ff;
+      font-size: 1.05rem;
+      transition: all 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      box-shadow: 0 0 10px #00ff9d;
+      background: rgba(255,255,255,0.12);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .social-connect {
+      margin-top: 60px;
+      text-align: center;
+    }
+
+    .social-connect h3 {
+      color: #00ff9d;
+      margin-bottom: 30px;
+      font-size: 1.5rem;
+      text-shadow: 0 0 15px rgba(0,255,157,0.5);
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .social-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      background: rgba(0,255,157,0.2);
+      color: #00ff9d;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.35s;
+      box-shadow: 0 0 20px rgba(0,255,157,0.3);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .social-btn:hover {
+      background: #00ff9d;
+      color: #0a0a1f;
+      transform: translateY(-8px);
+      box-shadow: 0 0 50px #00ff9d90;
+    }
+
+    button[type="submit"] {
+      width: 100%;
+      padding: 14px 0;
+      margin-top: 40px;
+      border: none;
+      border-radius: 50px;
+      background: #00ff9d;
+      color: #0a0a1f;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 25px #00ff9d80;
+      transition: all 0.3s;
+      font-size: 1.1rem;
+    }
+
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 40px #00ff9d;
+      background: #00ff88;
+    }
+
+    .alert {
+      display: none;
+      padding: 12px;
+      background: #00f0ff20;
+      color: #00ff9d;
+      margin-bottom: 20px;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    @media (max-width: 980px) {
+      .layout { flex-direction: column; padding: 20px; }
+      .sidebar { width: 100%; position: static; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>Edit Your Profile</h1>
-  <p>Add your Gamer Info, socials, and avatar.</p>
-</header>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-item"><i class="fas fa-home"></i> Home</div>
+      <div class="sidebar-item active"><i class="fas fa-user"></i> Profile</div>
+      <div class="sidebar-item"><i class="fas fa-envelope"></i> Messages</div>
+      <div class="sidebar-item"><i class="fas fa-bell"></i> Notifications</div>
+      <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+    </aside>
 
-<div class="form-container">
-  <div class="alert" id="alert"></div>
-  <form id="profile-form">
+    <!-- Main edit form -->
+    <main class="main-content">
+      <h1>NEX-LINK-XP</h1>
 
-    <label for="avatar">Avatar</label>
-    <img id="avatar-preview" src="" alt="Click to change avatar">
-    <input type="file" id="avatar-file" accept="image/*" style="display:none;">
+      <div class="alert" id="alert"></div>
 
-    <label for="username">Username</label>
-    <input type="text" id="username" placeholder="Your username">
+      <form id="profile-form">
 
-    <label for="gamertag">Gamer Tag</label>
-    <input type="text" id="gamertag" placeholder="Your gamer tag">
+        <div class="avatar-wrapper">
+          <label for="avatar-preview">Profile Picture</label>
+          <img id="avatar-preview" src="" alt="Click to change avatar">
+          <input type="file" id="avatar-file" accept="image/*" style="display:none;">
+        </div>
 
-    <label for="age">Age</label>
-    <input type="number" id="age" placeholder="Your age">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Your username">
+        </div>
 
-    <label for="bio">Bio</label>
-    <textarea id="bio" placeholder="Tell us about yourself..."></textarea>
+        <div class="form-group">
+          <label for="gamertag">Gamer Tag</label>
+          <input type="text" id="gamertag" placeholder="Your gamer tag">
+        </div>
 
-    <label for="discord">Discord</label>
-    <input type="text" id="discord" placeholder="Discord username#1234">
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" placeholder="Your age">
+        </div>
 
-    <label for="youtube">YouTube URL</label>
-    <input type="url" id="youtube" placeholder="https://youtube.com/...">
+        <div class="form-group">
+          <label for="bio">Bio</label>
+          <textarea id="bio" placeholder="Tell us about yourself..."></textarea>
+        </div>
 
-    <label for="twitch">Twitch URL</label>
-    <input type="url" id="twitch" placeholder="https://twitch.tv/...">
+        <div class="form-group">
+          <label for="discord">Discord</label>
+          <input type="text" id="discord" placeholder="Discord username#1234">
+        </div>
 
-    <label for="x">X (Twitter) URL</label>
-    <input type="url" id="x" placeholder="https://twitter.com/...">
+        <div class="form-group">
+          <label for="youtube">YouTube URL</label>
+          <input type="url" id="youtube" placeholder="https://youtube.com/...">
+        </div>
 
-    <label for="instagram">Instagram URL</label>
-    <input type="url" id="instagram" placeholder="https://instagram.com/...">
+        <div class="form-group">
+          <label for="twitch">Twitch URL</label>
+          <input type="url" id="twitch" placeholder="https://twitch.tv/...">
+        </div>
 
-    <label for="tiktok">TikTok URL</label>
-    <input type="url" id="tiktok" placeholder="https://tiktok.com/...">
+        <div class="form-group">
+          <label for="x">X (Twitter) URL</label>
+          <input type="url" id="x" placeholder="https://twitter.com/...">
+        </div>
 
-    <button type="submit">Save Profile</button>
-  </form>
-</div>
+        <div class="form-group">
+          <label for="instagram">Instagram URL</label>
+          <input type="url" id="instagram" placeholder="https://instagram.com/...">
+        </div>
 
-<script>
-const alertBox = document.getElementById('alert');
-function showAlert(msg){
-  alertBox.textContent = msg;
-  alertBox.style.display = 'block';
-  alertBox.onclick = () => alertBox.style.display = 'none';
-}
+        <div class="form-group">
+          <label for="tiktok">TikTok URL</label>
+          <input type="url" id="tiktok" placeholder="https://tiktok.com/...">
+        </div>
 
-// Load current user safely
-const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-if(!currentUser || !currentUser.email){
-  showAlert('No user logged in. Redirecting...');
-  setTimeout(()=>window.location.href='createprofile.html',1000);
-}
+        <div class="social-connect">
+          <h3>Connect Social Media</h3>
+          <div class="social-icons">
+            <div class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></div>
+            <div class="social-btn" title="X"><i class="fab fa-x-twitter"></i></div>
+            <div class="social-btn" title="Discord"><i class="fab fa-discord"></i></div>
+            <div class="social-btn" title="Twitch"><i class="fab fa-twitch"></i></div>
+            <div class="social-btn" title="Instagram"><i class="fab fa-instagram"></i></div>
+            <div class="social-btn" title="Crypto/Payment"><i class="fas fa-dollar-sign"></i></div>
+          </div>
+        </div>
 
-const users = JSON.parse(localStorage.getItem('users')||'{}');
-const profile = users[currentUser?.email]?.profile || {};
+        <button type="submit">Save Profile</button>
+      </form>
+    </main>
+  </div>
 
-// Elements
-const avatarPreview = document.getElementById('avatar-preview');
-const avatarFileInput = document.getElementById('avatar-file');
-
-// Show existing avatar or placeholder
-avatarPreview.src = profile.avatar || 'https://via.placeholder.com/100x100.png?text=Avatar';
-
-// Clicking avatar opens file picker
-avatarPreview.addEventListener('click', ()=>avatarFileInput.click());
-
-// When user selects a file
-avatarFileInput.addEventListener('change', function(){
-  const file = this.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = function(e){
-      avatarPreview.src = e.target.result; // preview image
+  <script>
+    const alertBox = document.getElementById('alert');
+    function showAlert(msg) {
+      alertBox.textContent = msg;
+      alertBox.style.display = 'block';
+      alertBox.onclick = () => alertBox.style.display = 'none';
     }
-    reader.readAsDataURL(file);
-  }
-});
 
-// Populate other existing data
-document.getElementById('username').value = profile.username || currentUser?.username || '';
-document.getElementById('gamertag').value = profile.gamertag || '';
-document.getElementById('age').value = profile.age || '';
-document.getElementById('bio').value = profile.bio || '';
-document.getElementById('discord').value = profile.discord || '';
-document.getElementById('youtube').value = profile.youtube || '';
-document.getElementById('twitch').value = profile.twitch || '';
-document.getElementById('x').value = profile.x || '';
-document.getElementById('instagram').value = profile.instagram || '';
-document.getElementById('tiktok').value = profile.tiktok || '';
-
-// Validate URLs
-function isValidURL(url){
-  if(!url) return true; // allow empty
-  try { new URL(url); return true; } 
-  catch { return false; }
-}
-
-// Handle form submit
-document.getElementById('profile-form').addEventListener('submit', e=>{
-  e.preventDefault();
-
-  const username = document.getElementById('username').value.trim();
-  const gamertag = document.getElementById('gamertag').value.trim() || null;
-  const ageValue = document.getElementById('age').value.trim();
-  const age = ageValue === '' ? null : Number(ageValue);
-  const bio = document.getElementById('bio').value.trim() || null;
-  const avatar = avatarPreview.src || null;
-  const discord = document.getElementById('discord').value.trim() || null;
-  const youtube = document.getElementById('youtube').value.trim() || null;
-  const twitch = document.getElementById('twitch').value.trim() || null;
-  const x = document.getElementById('x').value.trim() || null;
-  const instagram = document.getElementById('instagram').value.trim() || null;
-  const tiktok = document.getElementById('tiktok').value.trim() || null;
-
-  // Validate URLs
-  const urls = {avatar, youtube, twitch, x, instagram, tiktok};
-  for(const key in urls){
-    if(!isValidURL(urls[key])){
-      showAlert(`${key.toUpperCase()} URL is invalid`);
-      return;
+    // Load current user safely
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (!currentUser || !currentUser.email) {
+      showAlert('No user logged in. Redirecting...');
+      setTimeout(() => window.location.href = 'createprofile.html', 1000);
     }
-  }
 
-  // Save to localStorage
-  users[currentUser.email] = users[currentUser.email] || {};
-  users[currentUser.email].profile = { username, gamertag, age, bio, avatar, discord, youtube, twitch, x, instagram, tiktok };
-  localStorage.setItem('users', JSON.stringify(users));
+    const users = JSON.parse(localStorage.getItem('users') || '{}');
+    const profile = users[currentUser?.email]?.profile || {};
 
-  // Update currentUser username
-  currentUser.username = username;
-  localStorage.setItem('currentUser', JSON.stringify(currentUser));
+    // Elements
+    const avatarPreview = document.getElementById('avatar-preview');
+    const avatarFileInput = document.getElementById('avatar-file');
 
-  showAlert('Profile updated!');
-  setTimeout(()=>window.location.href='profile.html',1000);
-});
-</script>
+    // Show existing avatar or placeholder
+    avatarPreview.src = profile.avatar || 'https://via.placeholder.com/180x180.png?text=Avatar';
+
+    // Clicking avatar opens file picker
+    avatarPreview.addEventListener('click', () => avatarFileInput.click());
+
+    // File preview
+    avatarFileInput.addEventListener('change', function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          avatarPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Populate fields
+    document.getElementById('username').value = profile.username || currentUser?.username || '';
+    document.getElementById('gamertag').value = profile.gamertag || '';
+    document.getElementById('age').value = profile.age || '';
+    document.getElementById('bio').value = profile.bio || '';
+    document.getElementById('discord').value = profile.discord || '';
+    document.getElementById('youtube').value = profile.youtube || '';
+    document.getElementById('twitch').value = profile.twitch || '';
+    document.getElementById('x').value = profile.x || '';
+    document.getElementById('instagram').value = profile.instagram || '';
+    document.getElementById('tiktok').value = profile.tiktok || '';
+
+    // URL validation
+    function isValidURL(url) {
+      if (!url) return true;
+      try { new URL(url); return true; }
+      catch { return false; }
+    }
+
+    // Form submit
+    document.getElementById('profile-form').addEventListener('submit', e => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const gamertag = document.getElementById('gamertag').value.trim() || null;
+      const ageValue = document.getElementById('age').value.trim();
+      const age = ageValue === '' ? null : Number(ageValue);
+      const bio = document.getElementById('bio').value.trim() || null;
+      const avatar = avatarPreview.src || null;
+      const discord = document.getElementById('discord').value.trim() || null;
+      const youtube = document.getElementById('youtube').value.trim() || null;
+      const twitch = document.getElementById('twitch').value.trim() || null;
+      const x = document.getElementById('x').value.trim() || null;
+      const instagram = document.getElementById('instagram').value.trim() || null;
+      const tiktok = document.getElementById('tiktok').value.trim() || null;
+
+      const urls = { avatar, youtube, twitch, x, instagram, tiktok };
+      for (const key in urls) {
+        if (!isValidURL(urls[key])) {
+          showAlert(`${key.toUpperCase()} URL is invalid`);
+          return;
+        }
+      }
+
+      users[currentUser.email] = users[currentUser.email] || {};
+      users[currentUser.email].profile = { username, gamertag, age, bio, avatar, discord, youtube, twitch, x, instagram, tiktok };
+      localStorage.setItem('users', JSON.stringify(users));
+
+      currentUser.username = username;
+      localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+      showAlert('Profile updated!');
+      setTimeout(() => window.location.href = 'profile.html', 1000);
+    });
+  </script>
 
 </body>
 </html>
