@@ -71,6 +71,32 @@
       box-shadow: 0 0 25px rgba(0,255,157,0.35);
     }
 
+    .sidebar-submenu {
+      padding-left: 40px;
+      font-size: 0.95rem;
+      color: #c0c0ff;
+    }
+
+    .sidebar-submenu a,
+    .sidebar-submenu button {
+      display: block;
+      padding: 10px 18px;
+      color: inherit;
+      text-decoration: none;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .sidebar-submenu a:hover,
+    .sidebar-submenu button:hover {
+      color: #00ff9d;
+      background: rgba(0,255,157,0.1);
+    }
+
     .main-content {
       flex: 1;
       background: rgba(20,15,50,0.85);
@@ -159,39 +185,6 @@
       box-shadow: 0 0 50px #00ff9d90;
     }
 
-    .edit-btn {
-      display: inline-block;
-      padding: 14px 40px;
-      margin-top: 40px;
-      background: #00ff9d;
-      color: #0a0a1f;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1rem;
-      box-shadow: 0 0 25px #00ff9d80;
-      transition: all 0.3s;
-    }
-
-    .edit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 40px #00ff9d;
-    }
-
-    button {
-      background: none;
-      border: none;
-      color: #ff4d4d;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 20px;
-    }
-
-    button:hover {
-      text-shadow: 0 0 10px #ff4d4d;
-    }
-
     @media (max-width: 980px) {
       .layout { flex-direction: column; }
       .sidebar { width: 100%; position: static; }
@@ -206,7 +199,12 @@
       <div class="sidebar-item"><i class="fas fa-home"></i> Home</div>
       <div class="sidebar-item"><i class="fas fa-envelope"></i> Messages</div>
       <div class="sidebar-item"><i class="fas fa-bell"></i> Notifications</div>
+      
       <div class="sidebar-item"><i class="fas fa-cog"></i> Settings</div>
+      <div class="sidebar-submenu">
+        <a href="profile-edit.html">Edit Profile</a>
+        <button onclick="logout()">Logout</button>
+      </div>
     </aside>
 
     <main class="main-content" id="profileContainer">
@@ -260,14 +258,6 @@
           <div class="socials">${socialsHTML}</div>
         </div>
       ` : ''}
-
-      <div style="text-align:center;">
-        <a href="profile-edit.html" class="edit-btn">Edit Profile</a>
-      </div>
-
-      <div style="text-align:center; margin-top:20px;">
-        <button onclick="logout()">Logout</button>
-      </div>
     `;
 
     // Logout function
